@@ -1,0 +1,14 @@
+30	İş sağlığı yasası hangi ülkede çıkmıştır?	İngiltere	15	orta
+31	İş yerlerini, işin yürütümü nedeniyle oluşan tehlikelerden ve sağlığa zarar verebilecek koşullardan arındırarak, daha iyi bir çalışma ortamı sağlamak için yapılan sistemli çalışmalara ne ad verilmektedir?	İş güvenliği	15	orta
+32	İş Sağlığı ve Güveliği'nin çıkışına öncülük eden çalışma alanı hangisidir?	Madencilik	10	kolay
+33	Bilgisayarda geçici bilgilerin tutulduğu ingilizce kısaltması RAM olan bilgisayar kasa elemanının açılımı nedir?	Random Access Memory	10	kolay
+34	Veri akışını kontrol eden ve içerisinde register, program sayacı ve ALU gibi birimler yer alan bilgisayar parçası nedir?	İşlemci	10	kolay
+35	İlk nesne tabanlı programlama dili olarak kabul edilen dil hangisidir?	Simula	20	zor
+36	Birleşik Devletler Savunma Bakanlığı'na bağlı olan, paket anahtarlama yönteminin ve internetin ilk kullanıldığı yer olarak kabul edilen şirket hangisidir?	ARPANET	15	orta
+37	Günümüzde telefon aramalarında da kullanılan switching yöntemi hangisidir?	Circuit switching	15	orta
+38	Daha güvenilir olarak kabul edilen protokol yöntemi hangisidir?	TCP	15	orta
+39	Tehlikeli sınıf işyeri için risk değerlendirmesi kaç yılda bir yapılır?	4	10	kolay
+40	Osmanlı İmparatorluğu döneminde hazırlanan ve 100 maddeden oluşan, iş sağlığı ve güvenliği ile ilgili ilk yasal belge hangisidir?	Dilaver Paşa Nizamnamesi	20	zor
+41	Nesne tabanlı programlama diline özel, sadece bu dilde kullanılan değişken hangisidir?	uint	10	kolay
+42	Matematiksel mod alma işlemi için hangi operatör kullanılır?	%	10	kolay
+43	Program içerisinde farklı değerler alabilen ifadelere ne ad verilir?	Değişken	10	kolay

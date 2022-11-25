@@ -1,0 +1,10 @@
+50	Sütün sayısı birbirinden farklı olan dizilere ..... dizi denir.	Düzensiz	7	kolay
+51	Veri tabanı işlemleri için kullanılan .NET sınıflarının tümüne ..... denir.	ADO.NET	10	orta
+52	SQL deyimlerinde kriter belirleme ..... komutuyla gerçekleştirilir.	Where	7	kolay
+53	Bir veya birden fazla metodu program içinde temsil eden referans türü nesneleri tanımlamak için ..... kullanılır.	Delegate	13	zor
+54	Komut penceresinde işlem yapabilmek için ..... moduna geçilmelidir.	Immediate	10	orta
+55	Her koşulda çalışacak kod satırları ..... bloğunda yazılır.	Finally	13	zor
+56	..... nesneye dayalı, hiyerarşik ve birleşik, içinde çok sayıda sınıf, arayüz ve yapı bulundurabilen kütüphaneler olarak tanımlanabilir.	Namespace	13	zor
+57	DataSet oluşturulduktan sonra ..... uzantılı bir dosya otomatik olarak oluşturulur.	Xsd	7	kolay
+58	Tablo içeriğinin XML dosyaya yazdırılması için ..... metodu kullanılır.	WriteXml()	13	zor
+59	XML dosyasının DataSet'ini otomatik olarak oluşturmak için ..... nesnesi kullanılır.	XmlDataDocument	10	orta

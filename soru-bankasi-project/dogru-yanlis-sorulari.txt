@@ -1,0 +1,11 @@
+80	DataAdapter ile bilgiler DataSet’e aktarılırken Open() metodundan yararlanılır.	Yanlış	5	kolay
+81	Ushort değişken türü hem negatif hem de pozitif değer alır.	Yanlış	5	kolay
+82	Tür dönüşümleri esnasında veri kaybı söz konusu değildir.	Yanlış	5	kolay
+83	Char değişken türü unicode özelliğinden dolayı 65536 farklı karakter tutabilir.	Doğru	7	orta
+84	Sabitler program içerisinde istenildiği zaman değiştirilir.	Yanlış	5	kolay
+85	Düğüm (record) içinde sadece sayı bilgisi saklayabiliriz.	Yanlış	7	orta
+86	Listeler doğrusal bir şekilde birbirine bağlı olarak yapılırlar.	Yanlış	5	kolay
+87	İşaretçi (pointer) tanımlandığında muhakkak bir değişkene bağlanmalıdır.	Doğru	10	zor
+88	Dizi içinde veriler otomatik olarak sıralanmaz.	Doğru	5	kolay
+89	Dizi içinde ondalıklı değerler saklayabiliriz.	Doğru	7	orta
+90	Çift yönlü bağlı listelerde önceki düğüme dönmek mümkündür.	Doğru	5	kolay

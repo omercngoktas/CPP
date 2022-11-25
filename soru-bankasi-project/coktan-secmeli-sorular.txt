@@ -1,10 +1,13 @@
-1	Aşağıdakilerden hangisi bir kod satırının başına eklendiğinde kod satırını yorum satırına dönüştürür?	{}	""	//	d	5	kolay
-2	Başlangıç ve bitiş değeri bilinen tekrarlı işlemlerde kullanılması en uygun olan döngü aşağıdakilerden hangisidir?	while	for do	switch	b	5	kolay
+1	Aşağıdakilerden hangisi bir kod satırının başına eklendiğinde kod satırını yorum satırına dönüştürür?	{}	""	//	#	d	5	kolay
+2	Başlangıç ve bitiş değeri bilinen tekrarlı işlemlerde kullanılması en uygun olan döngü aşağıdakilerden hangisidir?	while	for	do	switch	b	5	kolay
 3	Bir programda kullanılan switch yapısındaki default ifadesi için hangisi doğrudur?	Her switch yapısında olması gereken bir ifadedir.	Kendinden önceki şartlar gerçekleşmediğinde çalışır.	Switch yapısında, bütün durumlardan önce değerlendirilir.	Switch yapısından çıkmak için kullanılır.	b	7	orta
-4	İç içe komut yazımında ne yapmamalıyız?	Tüm komutlar aynı hizada yazılmalıdır	Blok başlangıç ve bitiş komutlarını yapmalıyız	İlk kapatılması gereken blok, en son yapılan blok olmalıdır Blok açma ve kapatma sayıları birbirine eşit olmalıdır	a	7	orta
+4	İç içe komut yazımında ne yapmamalıyız?	Tüm komutlar aynı hizada yazılmalıdır	Blok başlangıç ve bitiş komutlarını yapmalıyız	İlk kapatılması gereken blok, en son yapılan blok olmalıdır	Blok açma ve kapatma sayıları birbirine eşit olmalıdır	a	7	orta
 5	Aşağıdaki erişim türlerinden hangisine her yerden ulaşmak mümkündür?	Private	Protected	Public	Internal	c	5	kolay
 6	Garbage Collector (Çöp Toplayıcı)'ı en iyi hangisi ifade eder?	IL kodlarını Heap bölgesine taşır	Pointer’ları yok eder	Hafıza yönetiminden sorumludur	Sınıf oluşturmayı sağlar	c	10	zor
 7	Nesne tabanlı programlamada gizleme ve açığa çıkarma kavramını hangisi ifade eder?	Polymorphism	Encapsulation	Overloading	Static	b	7	orta
 8	Aşağıdakilerden hangisinde ToString ifadesi doğru kullanılmıştır?	ToString.i	i.ToString()	ToString(i)	(i).ToString	b	7	orta
 9	Hangi dilin görsel programlama sürümü yoktur?	C	Pascal	Basic	Tupol	d	10	zor
 10	Aşağıdakilerden hangisi türetilmiş bir sınıfın temel sınıftan kalıtımla alamayacağı üye için kullanılan erişim türüdür?	Ortak (public)	Özel (private)	İç (internal)	Korumalı (protected)	b	7	orta
+11	Aşağıdakilerden hangisi ile nesnenin değişken değerlerini koruyamayız?	private - özel	void - boş	protected - korumalı	public – paylaşıma açık	d	5	kolay
+12	Verilerin sadece tanımlı olduğu sınıfta geçerli olması için kullanılan erişim belirteci hangisidir?	private	public	protected	internal	a	5	kolay
+13	Bir nesnenin yaptığı işi diğer nesnelere aktaran komut aşağıdakilerden hangisidir?	Event	Object	Delegate	EventHandler	d	10	zor
