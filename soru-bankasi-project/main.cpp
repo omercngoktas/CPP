@@ -183,8 +183,8 @@ class KarisikSinav : public Sinav {
         }
 };
 
-/* bu kod girilen stringi lowercase'e çevirir, bu sayede inputları da lower yaparak arama algoritmasını daha iyi hale getiririz */
-//for_each(tempString.begin(), tempString.end(), [](char & c) { c = ::tolower(c); });
+
+
 
 
 vector<string> tokenize(string s, string del = " ")
@@ -207,6 +207,7 @@ int randomSayiUret(int upperLimit) {
     return ( rand() % (upperLimit - 1 + 1) + 1 );
 }
 
+/* bu kod girilen stringi lowercase'e çevirir, bu sayede inputları da lower yaparak arama algoritmasını daha iyi hale getiririz */
 void toLowerLetter(string &metin) {
     for_each(metin.begin(), metin.end(), [](char & c) { c = ::tolower(c); });
 }
@@ -1148,9 +1149,114 @@ void karisikSinavOlustur(
             }
         }
     }
-    cout << endl << "Sinavin toplam puani: " << YeniKarisikSinav.getPuanToplami() << endl;
     YeniKarisikSinav.SilCoktanSecmeliSoru();
-    cout << endl << "Sinavin toplam puani: " << YeniKarisikSinav.getPuanToplami() << endl;
+}
+
+void cevaplariDosyayaKaydet(int id, string verilenCevap) {
+    ofstream cevapText;
+    cevapText.open("sinav.txt", ios_base::app);
+    cevapText << id << "\t" << verilenCevap << endl;
+}
+
+void karisikSinaviUygula(KarisikSinav karisikSinavSorulari) {
+    string verilenCevap;
+    ofstream cevapText("sinav.txt", ios_base::out);
+    cevapText.close();
+
+    for(int i = 0; i < karisikSinavSorulari.getCoktanSecmeliSorular().size(); i++) {
+        // coktanSecmeliSoruyuYazdir(testSinaviSorulari.getCoktanSecmeliSorular()[i]);
+        // cout << "---------------------------------------------" << endl;
+        cout << karisikSinavSorulari.getCoktanSecmeliSorular()[i].getId() << "-) ";
+        cout << karisikSinavSorulari.getCoktanSecmeliSorular()[i].getSoruMetni() << endl;
+        cout << "a) " << karisikSinavSorulari.getCoktanSecmeliSorular()[i].getSoruSiklari()[0] << "\t";
+        cout << "b) " << karisikSinavSorulari.getCoktanSecmeliSorular()[i].getSoruSiklari()[1] << "\t";
+        cout << "c) " << karisikSinavSorulari.getCoktanSecmeliSorular()[i].getSoruSiklari()[2] << "\t";
+        cout << "d) " << karisikSinavSorulari.getCoktanSecmeliSorular()[i].getSoruSiklari()[3] << endl;
+        cout << "Cevabinizi giriniz (Yalnizca 'a', 'b', 'c' ya da 'd' olarak giriniz): ";
+        cin >> verilenCevap;
+        while( verilenCevap != "a" && verilenCevap != "b" && verilenCevap != "c" && verilenCevap != "d" ) {
+            cout << "Yanitinizin yalnizca 'a', 'b', 'c' ya da 'd' oldugundan emin olun." << endl;
+            cout << "Cevabinizi giriniz (Yalnizca 'a', 'b', 'c' ya da 'd' olarak giriniz): ";
+            cin >> verilenCevap;
+        }
+        toLowerLetter(verilenCevap);
+        cevaplariDosyayaKaydet(karisikSinavSorulari.getCoktanSecmeliSorular()[i].getId(), verilenCevap);
+    }
+    for(int i = 0; i < karisikSinavSorulari.getKlasikSorular().size(); i++) {
+        cout << karisikSinavSorulari.getKlasikSorular()[i].getId() << "-) ";
+        cout << karisikSinavSorulari.getKlasikSorular()[i].getSoruMetni() << endl;
+        cout << "Cevabinizi giriniz: ";
+        getline(cin >> ws, verilenCevap);
+        cevaplariDosyayaKaydet(karisikSinavSorulari.getKlasikSorular()[i].getId(), verilenCevap);
+    }
+    for(int i = 0; i < karisikSinavSorulari.getBoslukDoldurmaSorulari().size(); i++) {
+        cout << karisikSinavSorulari.getBoslukDoldurmaSorulari()[i].getId() << "-) ";
+        cout << karisikSinavSorulari.getBoslukDoldurmaSorulari()[i].getSoruMetni() << endl;
+        cout << "Bosluga gelecek cevabi giriniz: ";
+        getline(cin >> ws, verilenCevap);
+        cevaplariDosyayaKaydet(karisikSinavSorulari.getBoslukDoldurmaSorulari()[i].getId(), verilenCevap);
+    }
+    for(int i = 0; i < karisikSinavSorulari.getDogruYanlisSorulari().size(); i++) {
+        cout << karisikSinavSorulari.getDogruYanlisSorulari()[i].getId() << "-) ";
+        cout << karisikSinavSorulari.getDogruYanlisSorulari()[i].getSoruMetni() << endl;
+        cout << "Cevabinizi giriniz (D/Y): ";
+        getline(cin >> ws, verilenCevap);
+        toLowerLetter(verilenCevap);
+        while(verilenCevap != "y" && verilenCevap != "d") {
+            cout << "Cevabi dogru formatta girdiginizden emin olun." << endl;
+            cout << "Cevabinizi giriniz (D/Y): ";
+            getline(cin >> ws, verilenCevap);
+            toLowerLetter(verilenCevap);
+        }
+        cevaplariDosyayaKaydet(karisikSinavSorulari.getDogruYanlisSorulari()[i].getId(), verilenCevap);
+    }
+    cout << "Sinaviniz basariyla kaydedilmistir." << endl << endl;
+}
+
+void klasikSinaviUygula(KlasikSinav klasikSinavSorulari) {
+    string verilenCevap;
+    string dogruCevap;
+    ofstream cevapText("sinav.txt", ios_base::out);
+    cevapText.close();
+    for(int i = 0; i < klasikSinavSorulari.getKlasikSorular().size(); i++) {
+        cout << klasikSinavSorulari.getKlasikSorular()[i].getId() << "-) ";
+        cout << klasikSinavSorulari.getKlasikSorular()[i].getSoruMetni() << endl;
+        cout << "Cevabinizi giriniz: ";
+        getline(cin >> ws, verilenCevap);
+        dogruCevap = klasikSinavSorulari.getKlasikSorular()[i].getSoruCevabi();
+        cevaplariDosyayaKaydet(klasikSinavSorulari.getKlasikSorular()[i].getId(), verilenCevap);
+    }
+    cout << "Sinaviniz basariyla kaydedilmistir." << endl << endl;
+}
+
+void testSinaviniUygula(TestSinavi testSinaviSorulari) {
+    string verilenCevap;
+    string dogruCevap;
+    int alinanPuan = 0;
+    for(int i = 0; i < testSinaviSorulari.getCoktanSecmeliSorular().size(); i++) {
+        // coktanSecmeliSoruyuYazdir(testSinaviSorulari.getCoktanSecmeliSorular()[i]);
+        // cout << "---------------------------------------------" << endl;
+        cout << testSinaviSorulari.getCoktanSecmeliSorular()[i].getId() << "-) ";
+        cout << testSinaviSorulari.getCoktanSecmeliSorular()[i].getSoruMetni() << endl;
+        cout << "a) " << testSinaviSorulari.getCoktanSecmeliSorular()[i].getSoruSiklari()[0] << "\t";
+        cout << "b) " << testSinaviSorulari.getCoktanSecmeliSorular()[i].getSoruSiklari()[1] << "\t";
+        cout << "c) " << testSinaviSorulari.getCoktanSecmeliSorular()[i].getSoruSiklari()[2] << "\t";
+        cout << "d) " << testSinaviSorulari.getCoktanSecmeliSorular()[i].getSoruSiklari()[3] << endl;
+        cout << "Cevabinizi giriniz (Yalnizca 'a', 'b', 'c' ya da 'd' olarak giriniz): ";
+        cin >> verilenCevap;
+        while( verilenCevap != "a" && verilenCevap != "b" && verilenCevap != "c" && verilenCevap != "d" ) {
+            cout << "Yanitinizin yalnizca 'a', 'b', 'c' ya da 'd' oldugundan emin olun." << endl;
+            cout << "Cevabinizi giriniz (Yalnizca 'a', 'b', 'c' ya da 'd' olarak giriniz): ";
+            cin >> verilenCevap;
+        }
+        toLowerLetter(verilenCevap);
+        dogruCevap = testSinaviSorulari.getCoktanSecmeliSorular()[i].getDogruCevap();
+        toLowerLetter(dogruCevap);
+        if(verilenCevap == dogruCevap) {
+            alinanPuan += testSinaviSorulari.getCoktanSecmeliSorular()[i].getSoruPuani();
+        }
+    }
+    cout << testSinaviSorulari.getPuanToplami() << " uzerinden " << alinanPuan << " puan aldiniz." << endl << endl;
 }
 
 /* kullanıcıya hangi sınav çeşidini oluşturmak istediğinin sorulduğu menü */
@@ -1177,28 +1283,17 @@ void sinavOlusturmaMenusu(
         {
             case 1:
                 testSinaviOlustur(CoktanSecmeliSorular, YeniTestSinavi);
+                testSinaviniUygula(YeniTestSinavi);
                 return;
 
             case 2:
                 klasikSinavOlustur(KlasikSorular, YeniKlasikSinav);
+                klasikSinaviUygula(YeniKlasikSinav);
                 return;
 
             case 3:
                 karisikSinavOlustur(CoktanSecmeliSorular, DogruYanlisSorulari, BoslukDoldurmaSorulari, KlasikSorular, YeniKarisikSinav);
-
-                // for(int i = 0; i < YeniKarisikSinav.getKlasikSorular().size(); i++) {
-                //     klasikSoruyuYazdir(YeniKarisikSinav.getKlasikSorular()[i]);
-                // }
-                // for(int i = 0; i < YeniKarisikSinav.getBoslukDoldurmaSorulari().size(); i++) {
-                //     boslukDoldurmaSorusunuYazdir(YeniKarisikSinav.getBoslukDoldurmaSorulari()[i]);
-                // }
-                // for(int i = 0; i < YeniKarisikSinav.getDogruYanlisSorulari().size(); i++) {
-                //     dogruYanlisSorusunuYazdir(YeniKarisikSinav.getDogruYanlisSorulari()[i]);
-                // }
-
-                // for(int i = 0; i < YeniKarisikSinav.getCoktanSecmeliSorular().size(); i++) {
-                //     coktanSecmeliSoruyuYazdir(YeniKarisikSinav.getCoktanSecmeliSorular()[i]);
-                // }
+                karisikSinaviUygula(YeniKarisikSinav);
                 return;
 
             case 4:
