@@ -2,6 +2,9 @@
 #include <string>
 #include <vector>
 #include <fstream>
+#include <algorithm>
+#include <cctype>
+#include <unistd.h>
 
 using namespace std;
 
@@ -14,20 +17,20 @@ private:
     string zorlukDerecesi;
 
 public:
-    void setId(int soruId) { id = soruId; }
+    void SetId(int soruId) { id = soruId; }
     int getId() { return id; }
-    void setSoruMetni(string soruM) { soruMetni = soruM; }
+    void SetSoruMetni(string soruM) { soruMetni = soruM; }
     string getSoruMetni() { return soruMetni; }
-    void setSoruPuani(int soruP) { soruPuani = soruP; }
+    void SetSoruPuani(int soruP) { soruPuani = soruP; }
     int getSoruPuani() { return soruPuani; }
-    void setZorlukDerecesi(string zorlukD) { zorlukDerecesi = zorlukD; }
+    void SetZorlukDerecesi(string zorlukD) { zorlukDerecesi = zorlukD; }
     string getZorlukDerecesi() { return zorlukDerecesi; }
-    void setSoru(int id, string soruMetni, int soruPuani, string zorlukDerecesi)
+    void SetSoru(int id, string soruMetni, int soruPuani, string zorlukDerecesi)
     {
-        setId(id);
-        setSoruMetni(soruMetni);
-        setSoruPuani(soruPuani);
-        setZorlukDerecesi(zorlukDerecesi);
+        SetId(id);
+        SetSoruMetni(soruMetni);
+        SetSoruPuani(soruPuani);
+        SetZorlukDerecesi(zorlukDerecesi);
     }
 };
 
@@ -38,15 +41,15 @@ private:
     string dogruCevap;
 
 public:
-    void setSoruSikki(vector<string> yeniCoktanSecmeliCevabi) { soruSiklari = yeniCoktanSecmeliCevabi; }
+    void SetSoruSikki(vector<string> yeniCoktanSecmeliCevabi) { soruSiklari = yeniCoktanSecmeliCevabi; }
     vector<string> getSoruSiklari() { return soruSiklari; }
-    void setDogruCevap(string dogruC) { dogruCevap = dogruC; }
+    void SetDogruCevap(string dogruC) { dogruCevap = dogruC; }
     string getDogruCevap() { return dogruCevap; }
-    void setCoktanSecmeliSoru(int id, string soruMetni, int soruPuani, string zorlukDerecesi, string dogruCevap, vector<string> soruSikki)
+    void SetCoktanSecmeliSoru(int id, string soruMetni, int soruPuani, string zorlukDerecesi, string dogruCevap, vector<string> soruSikki)
     {
-        setSoru(id, soruMetni, soruPuani, zorlukDerecesi);
-        setSoruSikki(soruSikki);
-        setDogruCevap(dogruCevap);
+        SetSoru(id, soruMetni, soruPuani, zorlukDerecesi);
+        SetSoruSikki(soruSikki);
+        SetDogruCevap(dogruCevap);
     }
 };
 
@@ -56,12 +59,12 @@ private:
     string dogruCevap;
 
 public:
-    void setDogruCevap(string dogruC) { dogruCevap = dogruC; }
+    void SetDogruCevap(string dogruC) { dogruCevap = dogruC; }
     string getDogruCevap() { return dogruCevap; }
-    void setDogruYanlisSoru(int id, string soruMetni, int soruPuani, string zorlukDerecesi, string dogruCevap)
+    void SetDogruYanlisSoru(int id, string soruMetni, int soruPuani, string zorlukDerecesi, string dogruCevap)
     {
-        setSoru(id, soruMetni, soruPuani, zorlukDerecesi);
-        setDogruCevap(dogruCevap);
+        SetSoru(id, soruMetni, soruPuani, zorlukDerecesi);
+        SetDogruCevap(dogruCevap);
     }
 };
 
@@ -71,12 +74,12 @@ private:
     string soruCevabi;
 
 public:
-    void setSoruCevabi(string soruC) { soruCevabi = soruC; }
+    void SetSoruCevabi(string soruC) { soruCevabi = soruC; }
     string getSoruCevabi() { return soruCevabi; }
-    void setKlasikSoru(int id, string soruMetni, int soruPuani, string zorlukDerecesi, string dogruCevap)
+    void SetKlasikSoru(int id, string soruMetni, int soruPuani, string zorlukDerecesi, string dogruCevap)
     {
-        setSoru(id, soruMetni, soruPuani, zorlukDerecesi);
-        setSoruCevabi(dogruCevap);
+        SetSoru(id, soruMetni, soruPuani, zorlukDerecesi);
+        SetSoruCevabi(dogruCevap);
     }
 };
 
@@ -86,18 +89,103 @@ private:
     string boslukCevabi;
 
 public:
-    void setBoslukCevabi(string boslukC) { boslukCevabi = boslukC; }
+    void SetBoslukCevabi(string boslukC) { boslukCevabi = boslukC; }
     string getBoslukCevabi() { return boslukCevabi; }
-    void setBoslukDoldurmaSorusu(int id, string soruMetni, int soruPuani, string zorlukDerecesi, string dogruCevap)
+    void SetBoslukDoldurmaSorusu(int id, string soruMetni, int soruPuani, string zorlukDerecesi, string dogruCevap)
     {
-        setSoru(id, soruMetni, soruPuani, zorlukDerecesi);
-        setBoslukCevabi(dogruCevap);
+        SetSoru(id, soruMetni, soruPuani, zorlukDerecesi);
+        SetBoslukCevabi(dogruCevap);
     }
 };
 
 class Sinav
 {
+    private:
+        int puanToplami = 0;
+        string sinavTuru;
+
+    public:
+        void SetPuanToplami(int puan) { puanToplami += puan; }
+        int getPuanToplami() { return puanToplami; }
+        void SetSinavTuru(string tur) { sinavTuru = tur; }
+        string getSinavTuru() { return sinavTuru; }
+        void SetSinav(int puan, string tur) {
+            SetPuanToplami(puan);
+            SetSinavTuru(tur);
+        }
+        void puaniDusur(int dusurmeDegeri) {
+            puanToplami -= dusurmeDegeri;
+        }
 };
+
+class TestSinavi : public Sinav {
+    private:
+        vector <CoktanSecmeliSoru> coktanSecmeliSorular;
+
+    public:
+        void SetCoktanSecmeliSorular(CoktanSecmeliSoru yeniCoktanSecmeli) { coktanSecmeliSorular.push_back(yeniCoktanSecmeli); SetPuanToplami(yeniCoktanSecmeli.getSoruPuani()); }
+        vector <CoktanSecmeliSoru> getCoktanSecmeliSorular() { return coktanSecmeliSorular; }
+};
+
+class KlasikSinav : public Sinav {
+    private:
+        vector <KlasikSoru> klasikSorular;
+
+    public:
+        void SetKlasikSorular(KlasikSoru yeniKlasik) { klasikSorular.push_back(yeniKlasik); SetPuanToplami(yeniKlasik.getSoruPuani()); }
+        vector <KlasikSoru> getKlasikSorular() { return klasikSorular; }
+};
+
+class DogruYanlisSinav : public Sinav {
+    private:
+        vector <DogruYanlisSoru> dogruYanlisSorulari;
+
+    public:
+        void SetDogruYanlisSorulari(DogruYanlisSoru yeniDogruYanlis) { dogruYanlisSorulari.push_back(yeniDogruYanlis); SetPuanToplami(yeniDogruYanlis.getSoruPuani()); }
+        vector <DogruYanlisSoru> getDogruYanlisSorulari() { return dogruYanlisSorulari; }
+};
+
+class BoslukDoldurmaSinav : public Sinav {
+    private:
+        vector <BoslukDoldurma> boslukDoldurmaSorulari;
+
+    public:
+        void SetBoslukDoldurmaSorulari(BoslukDoldurma yeniBoslukDoldurma) { boslukDoldurmaSorulari.push_back(yeniBoslukDoldurma); SetPuanToplami(yeniBoslukDoldurma.getSoruPuani()); }
+        vector <BoslukDoldurma> getBoslukDoldurmaSorulari() { return boslukDoldurmaSorulari; }
+};
+
+class KarisikSinav : public Sinav {
+    private:
+        vector <CoktanSecmeliSoru> coktanSecmeliSorular;
+        vector <KlasikSoru> klasikSorular;
+        vector <DogruYanlisSoru> dogruYanlisSorulari;
+        vector <BoslukDoldurma> boslukDoldurmaSorulari;
+
+    public:
+        void SetCoktanSecmeliSorular(CoktanSecmeliSoru yeniCoktanSecmeli) { coktanSecmeliSorular.push_back(yeniCoktanSecmeli); SetPuanToplami(yeniCoktanSecmeli.getSoruPuani()); }
+        vector <CoktanSecmeliSoru> getCoktanSecmeliSorular() { return coktanSecmeliSorular; }
+        void SetKlasikSorular(KlasikSoru yeniKlasik) { klasikSorular.push_back(yeniKlasik); SetPuanToplami(yeniKlasik.getSoruPuani()); }
+        vector <KlasikSoru> getKlasikSorular() { return klasikSorular; }
+        void SetDogruYanlisSorulari(DogruYanlisSoru yeniDogruYanlis) { dogruYanlisSorulari.push_back(yeniDogruYanlis); SetPuanToplami(yeniDogruYanlis.getSoruPuani()); }
+        vector <DogruYanlisSoru> getDogruYanlisSorulari() { return dogruYanlisSorulari; }
+        void SetBoslukDoldurmaSorulari(BoslukDoldurma yeniBoslukDoldurma) { boslukDoldurmaSorulari.push_back(yeniBoslukDoldurma); SetPuanToplami(yeniBoslukDoldurma.getSoruPuani()); }
+        vector <BoslukDoldurma> getBoslukDoldurmaSorulari() { return boslukDoldurmaSorulari; }
+        void SilCoktanSecmeliSoru() {
+            if(getPuanToplami() > 110) {
+                for(int i = 0; i < getCoktanSecmeliSorular().size(); i++) {
+                    if(getPuanToplami() > 110) {
+                        puaniDusur(coktanSecmeliSorular[i].getSoruPuani());
+                        coktanSecmeliSorular.erase(coktanSecmeliSorular.begin() + 1);
+                    }
+                }
+                
+            }
+        }
+};
+
+/* bu kod girilen stringi lowercase'e çevirir, bu sayede inputları da lower yaparak arama algoritmasını daha iyi hale getiririz */
+//for_each(tempString.begin(), tempString.end(), [](char & c) { c = ::tolower(c); });
+
 
 vector<string> tokenize(string s, string del = " ")
 {
@@ -112,6 +200,15 @@ vector<string> tokenize(string s, string del = " ")
         soruVectoru.push_back(s.substr(start, end - start));
     } while (end != -1);
     return soruVectoru;
+}
+
+int randomSayiUret(int upperLimit) {
+    // srand( time(NULL) );
+    return ( rand() % (upperLimit - 1 + 1) + 1 );
+}
+
+void toLowerLetter(string &metin) {
+    for_each(metin.begin(), metin.end(), [](char & c) { c = ::tolower(c); });
 }
 
 int idOlustur(
@@ -139,10 +236,12 @@ void coktanSecmeliSoruEkle(vector<CoktanSecmeliSoru> &CoktanSecmeliSorular, int 
     getline(cin >> ws, c);
     cout << "D sikkini giriniz: ";
     getline(cin >> ws, d);
-    cout << "Sorunun cevabini giriniz (Soru cevabi A ise a giriniz): ";
+    cout << "Sorunun cevabini giriniz (a-b-c-d): ";
     cin >> dogruCevap;
+    toLowerLetter(dogruCevap);
     cout << "Sorunun zorluk derecesini giriniz (kolay-orta-zor): ";
     cin >> zorlukDerecesi;
+    toLowerLetter(zorlukDerecesi);
     cout << "Soru puanini giriniz: ";
     cin >> soruPuani;
 
@@ -150,7 +249,7 @@ void coktanSecmeliSoruEkle(vector<CoktanSecmeliSoru> &CoktanSecmeliSorular, int 
     cevaplar.push_back(b);
     cevaplar.push_back(c);
     cevaplar.push_back(d);
-    YeniCoktanSecmeliSorusu.setCoktanSecmeliSoru(yeniId, soruMetni, soruPuani, zorlukDerecesi, dogruCevap, cevaplar);
+    YeniCoktanSecmeliSorusu.SetCoktanSecmeliSoru(yeniId, soruMetni, soruPuani, zorlukDerecesi, dogruCevap, cevaplar);
     CoktanSecmeliSorular.push_back(YeniCoktanSecmeliSorusu);
 }
 
@@ -167,10 +266,11 @@ void klasikSoruEkle(vector<KlasikSoru> &KlasikSorular, int yeniId)
     getline(cin >> ws, soruCevabi);
     cout << "Sorunun zorluk derecesini giriniz (kolay-orta-zor): ";
     cin >> zorlukDerecesi;
+    toLowerLetter(zorlukDerecesi);
     cout << "Soru puanini giriniz: ";
     cin >> soruPuani;
 
-    YeniKlasikSorusu.setKlasikSoru(yeniId, soruMetni, soruPuani, zorlukDerecesi, soruCevabi);
+    YeniKlasikSorusu.SetKlasikSoru(yeniId, soruMetni, soruPuani, zorlukDerecesi, soruCevabi);
     KlasikSorular.push_back(YeniKlasikSorusu);
 }
 
@@ -184,14 +284,15 @@ void dogruYanlisSoruEkle(vector<DogruYanlisSoru> &DogruYanlisSorulari, int yeniI
 
     cout << "Dogru/Yanlis sorusunun metnini giriniz: ";
     getline(cin >> ws, soruMetni);
-    cout << "Dogru/Yanlis sorusunun cevabini giriniz (Y/N): ";
+    cout << "Dogru/Yanlis sorusunun cevabini giriniz (Yanlis/Dogru): ";
     cin >> soruCevabi;
     cout << "Dogru/Yanlis sorusunun zorluk derecesini giriniz (kolay-orta-zor): ";
     cin >> zorlukDerecesi;
+    toLowerLetter(zorlukDerecesi);
     cout << "Dogru/Yanlis sorusunun puanini giriniz: ";
     cin >> soruPuani;
 
-    YeniDogruYanlisSorusu.setDogruYanlisSoru(yeniId, soruMetni, soruPuani, zorlukDerecesi, soruCevabi);
+    YeniDogruYanlisSorusu.SetDogruYanlisSoru(yeniId, soruMetni, soruPuani, zorlukDerecesi, soruCevabi);
     DogruYanlisSorulari.push_back(YeniDogruYanlisSorusu);
 }
 
@@ -208,10 +309,11 @@ void boslukDoldurmaSoruEkle(vector<BoslukDoldurma> &BoslukDoldurmaSorulari, int 
     getline(cin >> ws, soruCevabi);
     cout << "Bosluk doldurma sorusunun zorluk derecesini giriniz (kolay-orta-zor): ";
     cin >> zorlukDerecesi;
+    toLowerLetter(zorlukDerecesi);
     cout << "Bosluk doldurma sorusunun puanini giriniz: ";
     cin >> soruPuani;
 
-    YeniBoslukDoldurmaSorusu.setBoslukDoldurmaSorusu(yeniId, soruMetni, soruPuani, zorlukDerecesi, soruCevabi);
+    YeniBoslukDoldurmaSorusu.SetBoslukDoldurmaSorusu(yeniId, soruMetni, soruPuani, zorlukDerecesi, soruCevabi);
     BoslukDoldurmaSorulari.push_back(YeniBoslukDoldurmaSorusu);
 }
 
@@ -277,8 +379,8 @@ void coktanSecmeliSoruyuYazdir(CoktanSecmeliSoru coktanSecmeliSoru)
     cout << "b) " << coktanSecmeliSoru.getSoruSiklari()[1] << "\t";
     cout << "c) " << coktanSecmeliSoru.getSoruSiklari()[2] << "\t";
     cout << "d) " << coktanSecmeliSoru.getSoruSiklari()[3] << endl;
-    cout << "Soru puani: " << coktanSecmeliSoru.getSoruPuani() << endl;
-    cout << "Soru zorlugu: " << coktanSecmeliSoru.getZorlukDerecesi() << endl;
+    cout << "Soru puani: " << coktanSecmeliSoru.getSoruPuani() << "\t";
+    cout << "Soru zorlugu: " << coktanSecmeliSoru.getZorlukDerecesi() << "\t";
     cout << "Soru cevabi: " << coktanSecmeliSoru.getDogruCevap() << endl;
 }
 
@@ -289,7 +391,7 @@ void klasikSoruyuYazdir(KlasikSoru klasikSoru)
     cout << klasikSoru.getId();
     cout << "-) " << klasikSoru.getSoruMetni() << endl;
     cout << "Soru cevabi: " << klasikSoru.getSoruCevabi() << endl;
-    cout << "Soru puani: " << klasikSoru.getSoruPuani() << endl;
+    cout << "Soru puani: " << klasikSoru.getSoruPuani() << "\t";
     cout << "Soru zorlugu: " << klasikSoru.getZorlukDerecesi() << endl;
 }
 
@@ -300,7 +402,7 @@ void boslukDoldurmaSorusunuYazdir(BoslukDoldurma boslukDoldurmaSorusu)
     cout << boslukDoldurmaSorusu.getId();
     cout << "-) " << boslukDoldurmaSorusu.getSoruMetni() << endl;
     cout << "Bosluga gelecek cevap: " << boslukDoldurmaSorusu.getBoslukCevabi() << endl;
-    cout << "Soru puani: " << boslukDoldurmaSorusu.getSoruPuani() << endl;
+    cout << "Soru puani: " << boslukDoldurmaSorusu.getSoruPuani() << "\t";
     cout << "Soru zorlugu: " << boslukDoldurmaSorusu.getZorlukDerecesi() << endl;
 }
 
@@ -311,7 +413,7 @@ void dogruYanlisSorusunuYazdir(DogruYanlisSoru dogruYanlisSorusu)
     cout << dogruYanlisSorusu.getId();
     cout << "-) " << dogruYanlisSorusu.getSoruMetni() << endl;
     cout << "Dogru yanlis cevabi : " << dogruYanlisSorusu.getDogruCevap() << endl;
-    cout << "Soru puani: " << dogruYanlisSorusu.getSoruPuani() << endl;
+    cout << "Soru puani: " << dogruYanlisSorusu.getSoruPuani() << "\t";
     cout << "Soru zorlugu: " << dogruYanlisSorusu.getZorlukDerecesi() << endl;
 }
 
@@ -342,7 +444,7 @@ void coktanSecmeliTxtdenEkle(string textFileName, vector<CoktanSecmeliSoru> &Cok
         cevaplar.push_back(dSikki);
 
         CoktanSecmeliSoru geciciCoktanSecmeli;
-        geciciCoktanSecmeli.setCoktanSecmeliSoru(id, soruMetni, soruPuani, zorlukDerecesi, soruCevabi, cevaplar);
+        geciciCoktanSecmeli.SetCoktanSecmeliSoru(id, soruMetni, soruPuani, zorlukDerecesi, soruCevabi, cevaplar);
         CoktanSecmeliSorular.push_back(geciciCoktanSecmeli);
     }
 }
@@ -364,7 +466,7 @@ void dogruYanlisTxtdenEkle(string textFileName, vector<DogruYanlisSoru> &DogruYa
         soruPuani = stoi(dogruYanlis[3]);
         soruZorlugu = dogruYanlis[4];
         DogruYanlisSoru geciciDogruYanlis;
-        geciciDogruYanlis.setDogruYanlisSoru(id, soruMetni, soruPuani, soruZorlugu, soruCevabi);
+        geciciDogruYanlis.SetDogruYanlisSoru(id, soruMetni, soruPuani, soruZorlugu, soruCevabi);
         DogruYanlisSorulari.push_back(geciciDogruYanlis);
     }
 }
@@ -386,7 +488,7 @@ void boslukDoldurmaTxtdenEkle(string textFileName, vector<BoslukDoldurma> &Boslu
         soruPuani = stoi(boslukDoldurma[3]);
         soruZorlugu = boslukDoldurma[4];
         BoslukDoldurma geciciBoslukDoldurma;
-        geciciBoslukDoldurma.setBoslukDoldurmaSorusu(id, soruMetni, soruPuani, soruZorlugu, soruCevabi);
+        geciciBoslukDoldurma.SetBoslukDoldurmaSorusu(id, soruMetni, soruPuani, soruZorlugu, soruCevabi);
         BoslukDoldurmaSorulari.push_back(geciciBoslukDoldurma);
     }
 }
@@ -408,7 +510,7 @@ void klasikSoruTxtdenEkle(string textFileName, vector<KlasikSoru> &KlasikSorular
         soruPuani = stoi(klasikSoru[3]);
         soruZorlugu = klasikSoru[4];
         KlasikSoru geciciKlasikSoru;
-        geciciKlasikSoru.setKlasikSoru(id, soruMetni, soruPuani, soruZorlugu, soruCevabi);
+        geciciKlasikSoru.SetKlasikSoru(id, soruMetni, soruPuani, soruZorlugu, soruCevabi);
         KlasikSorular.push_back(geciciKlasikSoru);
     }
 }
@@ -478,7 +580,7 @@ int idOlustur(
 }
 
 /* anahtar kelime girerek soru metninde eşleşme olursa soru listelenir */
-void soruMetniAnahtarKelimeListele(
+int soruMetniAnahtarKelimeListele(
     vector<CoktanSecmeliSoru> CoktanSecmeliSorular,
     vector<DogruYanlisSoru> DogruYanlisSorulari,
     vector<BoslukDoldurma> BoslukDoldurmaSorulari,
@@ -488,132 +590,234 @@ void soruMetniAnahtarKelimeListele(
 
     cout << "Soru metninde aramak istediginiz anahtar kelimeyi giriniz: ";
     getline(cin >> ws, anahtarKelime);
+    toLowerLetter(anahtarKelime);
+    int bulunanSoruSayisi = 0;
 
     for (int i = 0; i < CoktanSecmeliSorular.size(); i++)
     {
-        if (CoktanSecmeliSorular[i].getSoruMetni().find(anahtarKelime) != std::string::npos)
+        string soruMetniLowerCase = CoktanSecmeliSorular[i].getSoruMetni();
+        toLowerLetter(soruMetniLowerCase);
+        if (soruMetniLowerCase.find(anahtarKelime) != std::string::npos)
         {
             coktanSecmeliSoruyuYazdir(CoktanSecmeliSorular[i]);
+            bulunanSoruSayisi++;
         }
     }
     for (int i = 0; i < DogruYanlisSorulari.size(); i++)
     {
-        if (DogruYanlisSorulari[i].getSoruMetni().find(anahtarKelime) != std::string::npos)
+        string soruMetniLowerCase = DogruYanlisSorulari[i].getSoruMetni();
+        toLowerLetter(soruMetniLowerCase);
+        if (soruMetniLowerCase.find(anahtarKelime) != std::string::npos)
         {
             dogruYanlisSorusunuYazdir(DogruYanlisSorulari[i]);
+            bulunanSoruSayisi++;
         }
     }
     for (int i = 0; i < BoslukDoldurmaSorulari.size(); i++)
     {
-        if (BoslukDoldurmaSorulari[i].getSoruMetni().find(anahtarKelime) != std::string::npos)
+        string soruMetniLowerCase = BoslukDoldurmaSorulari[i].getSoruMetni();
+        toLowerLetter(soruMetniLowerCase);
+        if (soruMetniLowerCase.find(anahtarKelime) != std::string::npos)
         {
             boslukDoldurmaSorusunuYazdir(BoslukDoldurmaSorulari[i]);
+            bulunanSoruSayisi++;
         }
     }
     for (int i = 0; i < KlasikSorular.size(); i++)
     {
-        if (KlasikSorular[i].getSoruMetni().find(anahtarKelime) != std::string::npos)
+        string soruMetniLowerCase = KlasikSorular[i].getSoruMetni();
+        toLowerLetter(soruMetniLowerCase);
+        if (soruMetniLowerCase.find(anahtarKelime) != std::string::npos)
         {
             klasikSoruyuYazdir(KlasikSorular[i]);
+            bulunanSoruSayisi++;
         }
     }
+    cout << endl << "Toplam " << bulunanSoruSayisi << " soru listelendi.\n" << endl;
+    return bulunanSoruSayisi;
 }
 
 /* anahtar kelime girerek soru şıklarında eşleşme olursa soru listelenir */
-void soruSikkindaAnahtarKelimeListele(
+int soruSikkindaAnahtarKelimeListele(
     vector<CoktanSecmeliSoru> CoktanSecmeliSorular,
     vector<DogruYanlisSoru> DogruYanlisSorulari,
     vector<BoslukDoldurma> BoslukDoldurmaSorulari,
     vector<KlasikSoru> KlasikSorular)
 {
     string anahtarKelime;
+    int bulunanSoruSayisi = 0;
     cout << "Soru cevaplarinin icinde aramak istediginiz anahtar kelimeyi giriniz: ";
     getline(cin >> ws, anahtarKelime);
+    toLowerLetter(anahtarKelime);
 
     for (int i = 0; i < CoktanSecmeliSorular.size(); i++)
     {
         for (int j = 0; j < CoktanSecmeliSorular[i].getSoruSiklari().size(); j++)
         {
-            if (CoktanSecmeliSorular[i].getSoruSiklari()[j].find(anahtarKelime) != std::string::npos)
+            string soruCevabiLowerCase = CoktanSecmeliSorular[i].getSoruSiklari()[j];
+            toLowerLetter(soruCevabiLowerCase);
+            if (soruCevabiLowerCase.find(anahtarKelime) != std::string::npos)
             {
                 coktanSecmeliSoruyuYazdir(CoktanSecmeliSorular[i]);
+                bulunanSoruSayisi++;
             }
         }
     }
     for (int i = 0; i < DogruYanlisSorulari.size(); i++)
     {
-        if (DogruYanlisSorulari[i].getDogruCevap().find(anahtarKelime) != std::string::npos)
+        string soruCevabiLowerCase = DogruYanlisSorulari[i].getDogruCevap();
+        toLowerLetter(soruCevabiLowerCase);
+        if (soruCevabiLowerCase.find(anahtarKelime) != std::string::npos)
         {
             dogruYanlisSorusunuYazdir(DogruYanlisSorulari[i]);
+            bulunanSoruSayisi++;
         }
     }
     for (int i = 0; i < BoslukDoldurmaSorulari.size(); i++)
     {
-        if (BoslukDoldurmaSorulari[i].getBoslukCevabi().find(anahtarKelime) != std::string::npos)
+        string soruCevabiLowerCase = BoslukDoldurmaSorulari[i].getBoslukCevabi();
+        toLowerLetter(soruCevabiLowerCase);
+        if (soruCevabiLowerCase.find(anahtarKelime) != std::string::npos)
         {
             boslukDoldurmaSorusunuYazdir(BoslukDoldurmaSorulari[i]);
+            bulunanSoruSayisi++;
         }
     }
     for (int i = 0; i < KlasikSorular.size(); i++)
     {
-        if (KlasikSorular[i].getSoruCevabi().find(anahtarKelime) != std::string::npos)
+        string soruCevabiLowerCase = KlasikSorular[i].getSoruCevabi();
+        toLowerLetter(soruCevabiLowerCase);
+        if (soruCevabiLowerCase.find(anahtarKelime) != std::string::npos)
         {
             klasikSoruyuYazdir(KlasikSorular[i]);
+            bulunanSoruSayisi++;
         }
     }
+    cout << endl << "Toplam " << bulunanSoruSayisi << " soru listelendi.\n" << endl;
+    return bulunanSoruSayisi;
 }
 
 /* kullanıcı a-b-c-d şıklarından birisini girer ve cevabı girilen şık olan sorular listelenir */
-void dogruSikkaGoreListele(
-    vector<CoktanSecmeliSoru> CoktanSecmeliSorular,
-    vector<DogruYanlisSoru> DogruYanlisSorulari,
-    vector<BoslukDoldurma> BoslukDoldurmaSorulari,
-    vector<KlasikSoru> KlasikSorular)
+int dogruSikkaGoreListele(vector<CoktanSecmeliSoru> CoktanSecmeliSorular)
 {
+    int bulunanSoruSayisi = 0;
     string soruSikki;
-    cout << "Dogru siklari uzerinden aramak icin cevap sikki giriniz: ";
+    cout << "Dogru siklari uzerinden aramak icin cevap sikki giriniz (a-b-c-d): ";
     getline(cin >> ws, soruSikki);
+    toLowerLetter(soruSikki);
+    if(soruSikki != "a" && soruSikki != "b" && soruSikki != "c" && soruSikki != "d") {
+        cout << "Lutfen yalnizca 'a', 'b', 'c' ya da 'd' giriniz." << endl;
+        return bulunanSoruSayisi;
+    }
 
     for (int i = 0; i < CoktanSecmeliSorular.size(); i++)
     {
-        for (int j = 0; j < CoktanSecmeliSorular[i].getSoruSiklari().size(); j++)
+        string geciciSoruSikki = CoktanSecmeliSorular[i].getDogruCevap();
+        toLowerLetter(geciciSoruSikki);
+        if (geciciSoruSikki == soruSikki)
         {
-            if (CoktanSecmeliSorular[i].getSoruSiklari()[j].find(soruSikki) != std::string::npos)
-            {
-                coktanSecmeliSoruyuYazdir(CoktanSecmeliSorular[i]);
-            }
+            coktanSecmeliSoruyuYazdir(CoktanSecmeliSorular[i]);
+            bulunanSoruSayisi++;
         }
     }
+    cout << endl << "Toplam " << bulunanSoruSayisi << " soru listelendi.\n" << endl;
+    return bulunanSoruSayisi;
 }
 
 /* kullanıcı puan girer, eşleşen sorular listelenir */
-void girilenPuanaGoreListele(
+int girilenPuanaGoreListele(
     vector<CoktanSecmeliSoru> CoktanSecmeliSorular,
     vector<DogruYanlisSoru> DogruYanlisSorulari,
     vector<BoslukDoldurma> BoslukDoldurmaSorulari,
     vector<KlasikSoru> KlasikSorular)
 {
+    int bulunanSoruSayisi = 0;
     int girilenSoruPuani;
+    cout << "Puanina gore aramak istediginiz sorular icin puan giriniz: ";
+    cin >> girilenSoruPuani;
+
+    for (int i = 0; i < CoktanSecmeliSorular.size(); i++)
+    {
+        if (CoktanSecmeliSorular[i].getSoruPuani() == girilenSoruPuani) {
+            coktanSecmeliSoruyuYazdir(CoktanSecmeliSorular[i]);
+            bulunanSoruSayisi++;
+        }
+    }
+    for (int i = 0; i < DogruYanlisSorulari.size(); i++)
+    {
+        if (DogruYanlisSorulari[i].getSoruPuani() == girilenSoruPuani) {
+            dogruYanlisSorusunuYazdir(DogruYanlisSorulari[i]);
+            bulunanSoruSayisi++;
+        }
+    }
+    for (int i = 0; i < BoslukDoldurmaSorulari.size(); i++)
+    {
+        if (BoslukDoldurmaSorulari[i].getSoruPuani() == girilenSoruPuani) {
+            boslukDoldurmaSorusunuYazdir(BoslukDoldurmaSorulari[i]);
+            bulunanSoruSayisi++;
+        }
+    }
+    for (int i = 0; i < KlasikSorular.size(); i++)
+    {
+        if (KlasikSorular[i].getSoruPuani() == girilenSoruPuani) {
+            klasikSoruyuYazdir(KlasikSorular[i]);
+            bulunanSoruSayisi++;
+        }
+    }
+    cout << endl << "Toplam " << bulunanSoruSayisi << " soru listelendi.\n" << endl;
+    return bulunanSoruSayisi;
 }
 
-/* sorular zorluguna gore kolay-orta-zor şeklinde listelenir */
-void zorlugaGoreListele(
+/* kullanıcı kolay-orta-zor seçeneklerinden birisini girer ve eşleşen sorular listelenir */
+int zorlugaGoreListele(
     vector<CoktanSecmeliSoru> CoktanSecmeliSorular,
     vector<DogruYanlisSoru> DogruYanlisSorulari,
     vector<BoslukDoldurma> BoslukDoldurmaSorulari,
     vector<KlasikSoru> KlasikSorular)
 {
+    int bulunanSoruSayisi = 0;
+    string soruZorlugu;
+    cout << "Zorluguna gore listelemek icin 'kolay', 'orta' veya 'zor' seceneklerinden birisini yaziniz: ";
+    getline(cin >> ws, soruZorlugu);
+    if (soruZorlugu != "kolay" && soruZorlugu != "orta" && soruZorlugu != "zor")
+    {
+        cout << "Lutfen yalnizca 'kolay', 'orta' veya 'zor' giriniz." << endl
+             << endl;
+        return bulunanSoruSayisi;
+    }
+    for (int i = 0; i < CoktanSecmeliSorular.size(); i++)
+    {
+        if (CoktanSecmeliSorular[i].getZorlukDerecesi() == soruZorlugu) {
+            coktanSecmeliSoruyuYazdir(CoktanSecmeliSorular[i]);
+            bulunanSoruSayisi++;
+        }
+    }
+    for (int i = 0; i < DogruYanlisSorulari.size(); i++)
+    {
+        if (DogruYanlisSorulari[i].getZorlukDerecesi() == soruZorlugu) {
+            dogruYanlisSorusunuYazdir(DogruYanlisSorulari[i]);
+            bulunanSoruSayisi++;
+        }
+    }
+    for (int i = 0; i < BoslukDoldurmaSorulari.size(); i++)
+    {
+        if (BoslukDoldurmaSorulari[i].getZorlukDerecesi() == soruZorlugu) {
+            boslukDoldurmaSorusunuYazdir(BoslukDoldurmaSorulari[i]);
+            bulunanSoruSayisi++;
+        }
+    }
+    for (int i = 0; i < KlasikSorular.size(); i++)
+    {
+        if (KlasikSorular[i].getZorlukDerecesi() == soruZorlugu) {
+            klasikSoruyuYazdir(KlasikSorular[i]);
+            bulunanSoruSayisi++;
+        }
+    }
+    cout << endl << "Toplam " << bulunanSoruSayisi << " soru listelendi.\n" << endl;
+    return bulunanSoruSayisi;
 }
 
-/* sorular puanlarına göre küçükten büyüğe listelenir */
-void puanaGoreListele(
-    vector<CoktanSecmeliSoru> CoktanSecmeliSorular,
-    vector<DogruYanlisSoru> DogruYanlisSorulari,
-    vector<BoslukDoldurma> BoslukDoldurmaSorulari,
-    vector<KlasikSoru> KlasikSorular)
-{
-}
-
+/* istenen listeleme yöntemlerinin sorulduğu menü */
 void soruListele(
     vector<CoktanSecmeliSoru> CoktanSecmeliSorular,
     vector<DogruYanlisSoru> DogruYanlisSorulari,
@@ -627,9 +831,8 @@ void soruListele(
         cout << "2- Soru siklari icerisinde anahtar kelime arayarak listele" << endl;
         cout << "3- Girilen sikka gore listele" << endl;
         cout << "4- Soru puanina gore sorulari listele" << endl;
-        cout << "5- Soru zorluguna gore kolaydan zora sorulari listele" << endl;
-        cout << "6- Soru puanina gore kucukten buyuge sorulari listele" << endl;
-        cout << "7- Ana menuye don" << endl;
+        cout << "5- Soru zorluguna gore listele" << endl;
+        cout << "6- Ana menuye don" << endl;
         cout << "Lutfen yapmak istediginiz islemi giriniz: ";
         cin >> menuSecimi;
 
@@ -637,31 +840,370 @@ void soruListele(
         {
         case 1:
             soruMetniAnahtarKelimeListele(CoktanSecmeliSorular, DogruYanlisSorulari, BoslukDoldurmaSorulari, KlasikSorular);
-            break;
+            return;
 
         case 2:
             soruSikkindaAnahtarKelimeListele(CoktanSecmeliSorular, DogruYanlisSorulari, BoslukDoldurmaSorulari, KlasikSorular);
-            break;
+            return;
 
         case 3:
-            dogruSikkaGoreListele(CoktanSecmeliSorular, DogruYanlisSorulari, BoslukDoldurmaSorulari, KlasikSorular);
-            break;
+            dogruSikkaGoreListele(CoktanSecmeliSorular);
+            return;
 
         case 4:
             girilenPuanaGoreListele(CoktanSecmeliSorular, DogruYanlisSorulari, BoslukDoldurmaSorulari, KlasikSorular);
-            break;
+            return;
 
         case 5:
             zorlugaGoreListele(CoktanSecmeliSorular, DogruYanlisSorulari, BoslukDoldurmaSorulari, KlasikSorular);
-            break;
-
-        case 6:
-            puanaGoreListele(CoktanSecmeliSorular, DogruYanlisSorulari, BoslukDoldurmaSorulari, KlasikSorular);
-            break;
-
-        case 7:
             return;
 
+        case 6:
+            return;
+
+        default:
+            break;
+        }
+    }
+}
+
+/* kullanıcının girdiği anahtar kelime bulunduktan sonra id'ler bir vectore atanır ve returnlenir*/
+vector <int> soruAraVeBulunanlariReturn(
+    vector<CoktanSecmeliSoru> CoktanSecmeliSorular,
+    vector<DogruYanlisSoru> DogruYanlisSorulari,
+    vector<BoslukDoldurma> BoslukDoldurmaSorulari,
+    vector<KlasikSoru> KlasikSorular
+) {
+    string anahtarKelime;
+
+    cout << "Silmek istediginiz soru icin anahtar kelime giriniz: ";
+    getline(cin >> ws, anahtarKelime);
+    toLowerLetter(anahtarKelime);
+    int bulunanSoruSayisi = 0;
+    vector <int> bulunanSorular;
+
+    for (int i = 0; i < CoktanSecmeliSorular.size(); i++)
+    {
+        string soruMetniLowerCase = CoktanSecmeliSorular[i].getSoruMetni();
+        toLowerLetter(soruMetniLowerCase);
+        if (soruMetniLowerCase.find(anahtarKelime) != std::string::npos)
+        {
+            coktanSecmeliSoruyuYazdir(CoktanSecmeliSorular[i]);
+            bulunanSoruSayisi++;
+            bulunanSorular.push_back(CoktanSecmeliSorular[i].getId());
+        }
+    }
+    for (int i = 0; i < DogruYanlisSorulari.size(); i++)
+    {
+        string soruMetniLowerCase = DogruYanlisSorulari[i].getSoruMetni();
+        toLowerLetter(soruMetniLowerCase);
+        if (soruMetniLowerCase.find(anahtarKelime) != std::string::npos)
+        {
+            dogruYanlisSorusunuYazdir(DogruYanlisSorulari[i]);
+            bulunanSoruSayisi++;
+            bulunanSorular.push_back(DogruYanlisSorulari[i].getId());
+        }
+    }
+    for (int i = 0; i < BoslukDoldurmaSorulari.size(); i++)
+    {
+        string soruMetniLowerCase = BoslukDoldurmaSorulari[i].getSoruMetni();
+        toLowerLetter(soruMetniLowerCase);
+        if (soruMetniLowerCase.find(anahtarKelime) != std::string::npos)
+        {
+            boslukDoldurmaSorusunuYazdir(BoslukDoldurmaSorulari[i]);
+            bulunanSoruSayisi++;
+            bulunanSorular.push_back(BoslukDoldurmaSorulari[i].getId());
+        }
+    }
+    for (int i = 0; i < KlasikSorular.size(); i++)
+    {
+        string soruMetniLowerCase = KlasikSorular[i].getSoruMetni();
+        toLowerLetter(soruMetniLowerCase);
+        if (soruMetniLowerCase.find(anahtarKelime) != std::string::npos)
+        {
+            klasikSoruyuYazdir(KlasikSorular[i]);
+            bulunanSoruSayisi++;
+            bulunanSorular.push_back(KlasikSorular[i].getId());
+        }
+    }
+    /*  bulunanSorular vector'une bulunanSoruSayisi'ni ekliyoruz.
+        bu sayede vector'un en sonunda soru sayisinin yer aldığını biliyoruz.
+        eğer ki bulunan sayısı 0 olursa kullanıcının silmek istediği sorunun
+        ID'si sorulmayacak.
+    */
+    bulunanSorular.push_back(bulunanSoruSayisi);
+    cout << "Toplam " << bulunanSoruSayisi << " soru listelendi.\n" << endl;
+    return bulunanSorular;
+}
+
+/* verilen id vectorlerde aranır ve bulunursa vectorden silinir */
+int soruCikar(
+    vector<CoktanSecmeliSoru> &CoktanSecmeliSorular,
+    vector<DogruYanlisSoru> &DogruYanlisSorulari,
+    vector<BoslukDoldurma> &BoslukDoldurmaSorulari,
+    vector<KlasikSoru> &KlasikSorular,
+    int soruId
+) {
+    for (int i = 0; i < CoktanSecmeliSorular.size(); i++) {
+        if(CoktanSecmeliSorular[i].getId() == soruId) {
+            CoktanSecmeliSorular.erase(CoktanSecmeliSorular.begin() + i);
+            return 1;
+        }
+    }
+    for (int i = 0; i < DogruYanlisSorulari.size(); i++) {
+        if(DogruYanlisSorulari[i].getId() == soruId) {
+            DogruYanlisSorulari.erase(DogruYanlisSorulari.begin() + i);
+            return 1;
+        }
+    }
+    for (int i = 0; i < BoslukDoldurmaSorulari.size(); i++) {
+        if(BoslukDoldurmaSorulari[i].getId() == soruId) {
+            BoslukDoldurmaSorulari.erase(BoslukDoldurmaSorulari.begin() + i);
+            return 1;
+        }
+    }
+    for (int i = 0; i < KlasikSorular.size(); i++) {
+        if(KlasikSorular[i].getId() == soruId) {
+            KlasikSorular.erase(KlasikSorular.begin() + i);
+            return 1;
+        }
+    }
+    return 0;
+}
+
+/* girilen id çoktan seçmeli sorular içerisinde aranır ve bulunursa obje olarak return edilir */
+CoktanSecmeliSoru idIleCoktanSecmeliSoruBul(int id, vector<CoktanSecmeliSoru> CoktanSecmeliSorular) {
+    for(int i = 0; i < CoktanSecmeliSorular.size(); i++) {
+        if(CoktanSecmeliSorular[i].getId() == id) {
+            return CoktanSecmeliSorular[i];
+        }
+    }
+    CoktanSecmeliSoru coktansecmelisoru;
+    return coktansecmelisoru;
+}
+
+/*  anahtar kelime ile sorular tarandıktan sonra eşleşmeler varsa kullanıcıya
+    silinmesini istediği sorunun ID'si sorulur, girilen ID tekrar kontrol edildikten 
+    sonra yine eşleşme bulunursa soru vectorden silinir
+*/
+void soruCikarmaMenusu(
+    vector<CoktanSecmeliSoru> &CoktanSecmeliSorular,
+    vector<DogruYanlisSoru> &DogruYanlisSorulari,
+    vector<BoslukDoldurma> &BoslukDoldurmaSorulari,
+    vector<KlasikSoru> &KlasikSorular
+) {
+    int soruId;
+    vector <int> bulunanSorular = soruAraVeBulunanlariReturn(CoktanSecmeliSorular, DogruYanlisSorulari, BoslukDoldurmaSorulari, KlasikSorular);
+    cout << "Silmek istediginiz sorunun ID'sini giriniz: ";
+    cin >> soruId;
+    int bulunanSoruSayisi = bulunanSorular[bulunanSorular.size() - 1];
+
+    if(bulunanSoruSayisi == 0) {
+        cout << "Anahtar kelime ile eslesen herhangi bir soru bulunamamistir. Ana menuye donuluyor." << endl;
+        return;
+    } 
+
+    for(int i = 0; i < bulunanSorular.size(); i++) {
+        if(bulunanSorular[i] == soruId) {
+            int silmeBasariliMi = soruCikar(CoktanSecmeliSorular, DogruYanlisSorulari, BoslukDoldurmaSorulari, KlasikSorular, soruId);
+            if(silmeBasariliMi == 1) {
+                cout << "ID'si " << soruId << " olan soru, soru bankasindan cikarilmistir." << endl;
+                return;
+            } else {
+                cout << "Silme isleminde hatayla karsilasildi." << endl;
+                return;
+            }
+        }
+    }
+    cout << "Girmis oldugunuz ID listelenen listedeki sorularla eslesmemistir." << endl << endl;
+    return;
+}
+
+/* bu fonksiyonla 1.seçenek olan 100-110 puan arasında  test sınavı oluşturulur */
+void testSinaviOlustur(vector<CoktanSecmeliSoru> CoktanSecmeliSorular, TestSinavi &YeniTestSinavi) {
+    vector <int> soruIdleri;
+    CoktanSecmeliSoru yeniCoktanSecmeliSoru;
+    int j = 0, soruIndexi, vectordeVarMi = 0;
+
+    while( YeniTestSinavi.getPuanToplami() < 60 ) {
+        vectordeVarMi = 0;
+        soruIndexi = randomSayiUret(CoktanSecmeliSorular.size()) - 1;
+
+        for(int i = 0; i < soruIdleri.size(); i++) {
+            if(soruIdleri[i] == soruIndexi){
+                vectordeVarMi = 1;
+                break;
+            }
+        }
+        if(vectordeVarMi == 0) {
+            soruIdleri.push_back(soruIndexi);
+            j++;
+            YeniTestSinavi.SetCoktanSecmeliSorular(CoktanSecmeliSorular[soruIndexi]);
+        }
+    }
+
+    cout << "Test sinavi icin toplam elde edilen puan: " << YeniTestSinavi.getPuanToplami() << endl;
+}
+
+/* 2.seçenek olan klasik sınav oluşturulur 100-110 puan arasında */
+void klasikSinavOlustur(vector<KlasikSoru> KlasikSorular, KlasikSinav &YeniKlasikSinav) {
+    vector <int> soruIdleri;
+    KarisikSinav yeniKlasikSoru;
+    int j = 0, soruIndexi, vectordeVarMi = 0;
+
+    while( YeniKlasikSinav.getPuanToplami() < 100 ) {
+        vectordeVarMi = 0;
+        soruIndexi = randomSayiUret(KlasikSorular.size()) - 1;
+
+        for(int i = 0; i < soruIdleri.size(); i++) {
+            if(soruIdleri[i] == soruIndexi){
+                vectordeVarMi = 1;
+                break;
+            }
+        }
+        if(vectordeVarMi == 0) {
+            soruIdleri.push_back(soruIndexi);
+            j++;
+            YeniKlasikSinav.SetKlasikSorular(KlasikSorular[soruIndexi]);
+        }
+    }
+
+    cout << "Klasik sinav icin toplam elde edilen puan: " << YeniKlasikSinav.getPuanToplami() << endl;
+}
+
+/* 3.seçenek olan tüm soru tiplerinden bir karışık sınav oluşturulur */
+void karisikSinavOlustur(
+    vector<CoktanSecmeliSoru> &CoktanSecmeliSorular,
+    vector<DogruYanlisSoru> &DogruYanlisSorulari,
+    vector<BoslukDoldurma> &BoslukDoldurmaSorulari,
+    vector<KlasikSoru> &KlasikSorular,
+    KarisikSinav &YeniKarisikSinav
+) {
+    int randomSinavTuru;
+    vector <int> soruIdleri;
+    int soruIndexi, vectordeVarMi;
+    
+    while( YeniKarisikSinav.getPuanToplami() < 25 ) {
+        vectordeVarMi = 0;
+        soruIndexi = randomSayiUret(CoktanSecmeliSorular.size()) - 1;
+        for(int i = 0; i < soruIdleri.size(); i++) {
+            if(soruIdleri[i] == soruIndexi){
+                vectordeVarMi = 1;
+                break;
+            }
+        }
+        if(vectordeVarMi == 0) {
+            soruIdleri.push_back(soruIndexi);
+            YeniKarisikSinav.SetCoktanSecmeliSorular(CoktanSecmeliSorular[soruIndexi]);
+        }
+    }
+    soruIdleri.clear();
+    while(YeniKarisikSinav.getPuanToplami() < 50) {
+        for(int i = 0; i < DogruYanlisSorulari.size(); i++) {
+            vectordeVarMi = 0;
+            soruIndexi = randomSayiUret(DogruYanlisSorulari.size()) - 1;
+            for(int i = 0; i < soruIdleri.size(); i++) {
+                if(soruIdleri[i] == soruIndexi){
+                    vectordeVarMi = 1;
+                    break;
+                }
+            }
+            if(vectordeVarMi == 0 && YeniKarisikSinav.getPuanToplami() < 50) {
+                soruIdleri.push_back(soruIndexi);
+                YeniKarisikSinav.SetDogruYanlisSorulari(DogruYanlisSorulari[soruIndexi]);
+            }
+        }
+    }
+    soruIdleri.clear();
+    while(YeniKarisikSinav.getPuanToplami() < 75) {
+        for(int i = 0; i < BoslukDoldurmaSorulari.size(); i++) {
+            vectordeVarMi = 0;
+            soruIndexi = randomSayiUret(BoslukDoldurmaSorulari.size()) - 1;
+            for(int i = 0; i < soruIdleri.size(); i++) {
+                if(soruIdleri[i] == soruIndexi){
+                    vectordeVarMi = 1;
+                    break;
+                }
+            }
+            if(vectordeVarMi == 0 && YeniKarisikSinav.getPuanToplami() < 75) {
+                soruIdleri.push_back(soruIndexi);
+                YeniKarisikSinav.SetBoslukDoldurmaSorulari(BoslukDoldurmaSorulari[soruIndexi]);
+            }
+        }
+    }
+    soruIdleri.clear();
+    while(YeniKarisikSinav.getPuanToplami() < 100) {
+        for(int i = 0; i < KlasikSorular.size(); i++) {
+            vectordeVarMi = 0;
+            soruIndexi = randomSayiUret(KlasikSorular.size()) - 1;
+            for(int i = 0; i < soruIdleri.size(); i++) {
+                if(soruIdleri[i] == soruIndexi){
+                    vectordeVarMi = 1;
+                    break;
+                }
+            }
+            if(vectordeVarMi == 0 && YeniKarisikSinav.getPuanToplami() < 100) {
+                soruIdleri.push_back(soruIndexi);
+                YeniKarisikSinav.SetKlasikSorular(KlasikSorular[soruIndexi]);
+            }
+        }
+    }
+    cout << endl << "Sinavin toplam puani: " << YeniKarisikSinav.getPuanToplami() << endl;
+    YeniKarisikSinav.SilCoktanSecmeliSoru();
+    cout << endl << "Sinavin toplam puani: " << YeniKarisikSinav.getPuanToplami() << endl;
+}
+
+/* kullanıcıya hangi sınav çeşidini oluşturmak istediğinin sorulduğu menü */
+void sinavOlusturmaMenusu(
+    vector<CoktanSecmeliSoru> CoktanSecmeliSorular,
+    vector<DogruYanlisSoru> DogruYanlisSorulari,
+    vector<BoslukDoldurma> BoslukDoldurmaSorulari,
+    vector<KlasikSoru> KlasikSorular
+) {
+    int sinavSecimi;
+    while(true) {
+        cout << "1- Test sinavi olustur" << endl;
+        cout << "2- Klasik sinav olustur" << endl;
+        cout << "3- Karisik sinav olustur" << endl;
+        cout << "4- Ana menuye don" << endl;
+        cout << "Lutfen yapmak istediginiz secimi giriniz: ";
+        cin >> sinavSecimi;
+
+        TestSinavi YeniTestSinavi;
+        KlasikSinav YeniKlasikSinav;
+        KarisikSinav YeniKarisikSinav;
+
+        switch (sinavSecimi)
+        {
+            case 1:
+                testSinaviOlustur(CoktanSecmeliSorular, YeniTestSinavi);
+                return;
+
+            case 2:
+                klasikSinavOlustur(KlasikSorular, YeniKlasikSinav);
+                return;
+
+            case 3:
+                karisikSinavOlustur(CoktanSecmeliSorular, DogruYanlisSorulari, BoslukDoldurmaSorulari, KlasikSorular, YeniKarisikSinav);
+
+                // for(int i = 0; i < YeniKarisikSinav.getKlasikSorular().size(); i++) {
+                //     klasikSoruyuYazdir(YeniKarisikSinav.getKlasikSorular()[i]);
+                // }
+                // for(int i = 0; i < YeniKarisikSinav.getBoslukDoldurmaSorulari().size(); i++) {
+                //     boslukDoldurmaSorusunuYazdir(YeniKarisikSinav.getBoslukDoldurmaSorulari()[i]);
+                // }
+                // for(int i = 0; i < YeniKarisikSinav.getDogruYanlisSorulari().size(); i++) {
+                //     dogruYanlisSorusunuYazdir(YeniKarisikSinav.getDogruYanlisSorulari()[i]);
+                // }
+
+                // for(int i = 0; i < YeniKarisikSinav.getCoktanSecmeliSorular().size(); i++) {
+                //     coktanSecmeliSoruyuYazdir(YeniKarisikSinav.getCoktanSecmeliSorular()[i]);
+                // }
+                return;
+
+            case 4:
+                return;
+        
         default:
             break;
         }
@@ -680,6 +1222,7 @@ int main()
     int menuSecimi;
     while (true)
     {
+        
         cout << "1- Soru bankasina soru ekle" << endl;
         cout << "2- Soru bankasindan soru cikar" << endl;
         cout << "3- Soru bankasindaki sorulari listele" << endl;
@@ -687,7 +1230,7 @@ int main()
         cout << "5- Cikis yap" << endl;
         cout << "Lutfen yapmak istediginiz islemi giriniz: ";
         cin >> menuSecimi;
-
+        
         switch (menuSecimi)
         {
         case 1:
@@ -695,6 +1238,7 @@ int main()
             continue;
 
         case 2:
+            soruCikarmaMenusu(CoktanSecmeliSorular, DogruYanlisSorulari, BoslukDoldurmaSorulari, KlasikSorular);
             break;
 
         case 3:
@@ -702,6 +1246,7 @@ int main()
             break;
 
         case 4:
+            sinavOlusturmaMenusu(CoktanSecmeliSorular, DogruYanlisSorulari, BoslukDoldurmaSorulari, KlasikSorular);
             break;
 
         case 5:
