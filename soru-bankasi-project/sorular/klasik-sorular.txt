@@ -1,4 +1,4 @@
-30	İş sağlığı yasası hangi ülkede çıkmıştır?	İngiltere	15	orta
+14	İş sağlığı yasası hangi ülkede çıkmıştır?	İngiltere	15	orta
 31	İş yerlerini, işin yürütümü nedeniyle oluşan tehlikelerden ve sağlığa zarar verebilecek koşullardan arındırarak, daha iyi bir çalışma ortamı sağlamak için yapılan sistemli çalışmalara ne ad verilmektedir?	İş güvenliği	15	orta
 32	İş Sağlığı ve Güveliği'nin çıkışına öncülük eden çalışma alanı hangisidir?	Madencilik	10	kolay
 33	Bilgisayarda geçici bilgilerin tutulduğu ingilizce kısaltması RAM olan bilgisayar kasa elemanının açılımı nedir?	Random Access Memory	10	kolay
