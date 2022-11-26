@@ -496,21 +496,21 @@ void soruMetniAnahtarKelimeListele(
             coktanSecmeliSoruyuYazdir(CoktanSecmeliSorular[i]);
         }
     }
-    for (int i = 0; i < DogruYanlisSorulari.size(); i++) 
+    for (int i = 0; i < DogruYanlisSorulari.size(); i++)
     {
         if (DogruYanlisSorulari[i].getSoruMetni().find(anahtarKelime) != std::string::npos)
         {
             dogruYanlisSorusunuYazdir(DogruYanlisSorulari[i]);
         }
     }
-    for (int i = 0; i < BoslukDoldurmaSorulari.size(); i++) 
+    for (int i = 0; i < BoslukDoldurmaSorulari.size(); i++)
     {
         if (BoslukDoldurmaSorulari[i].getSoruMetni().find(anahtarKelime) != std::string::npos)
         {
             boslukDoldurmaSorusunuYazdir(BoslukDoldurmaSorulari[i]);
         }
     }
-    for (int i = 0; i < KlasikSorular.size(); i++) 
+    for (int i = 0; i < KlasikSorular.size(); i++)
     {
         if (KlasikSorular[i].getSoruMetni().find(anahtarKelime) != std::string::npos)
         {
@@ -527,6 +527,40 @@ void soruSikkindaAnahtarKelimeListele(
     vector<KlasikSoru> KlasikSorular)
 {
     string anahtarKelime;
+    cout << "Soru cevaplarinin icinde aramak istediginiz anahtar kelimeyi giriniz: ";
+    getline(cin >> ws, anahtarKelime);
+
+    for (int i = 0; i < CoktanSecmeliSorular.size(); i++)
+    {
+        for (int j = 0; j < CoktanSecmeliSorular[i].getSoruSiklari().size(); j++)
+        {
+            if (CoktanSecmeliSorular[i].getSoruSiklari()[j].find(anahtarKelime) != std::string::npos)
+            {
+                coktanSecmeliSoruyuYazdir(CoktanSecmeliSorular[i]);
+            }
+        }
+    }
+    for (int i = 0; i < DogruYanlisSorulari.size(); i++)
+    {
+        if (DogruYanlisSorulari[i].getDogruCevap().find(anahtarKelime) != std::string::npos)
+        {
+            dogruYanlisSorusunuYazdir(DogruYanlisSorulari[i]);
+        }
+    }
+    for (int i = 0; i < BoslukDoldurmaSorulari.size(); i++)
+    {
+        if (BoslukDoldurmaSorulari[i].getBoslukCevabi().find(anahtarKelime) != std::string::npos)
+        {
+            boslukDoldurmaSorusunuYazdir(BoslukDoldurmaSorulari[i]);
+        }
+    }
+    for (int i = 0; i < KlasikSorular.size(); i++)
+    {
+        if (KlasikSorular[i].getSoruCevabi().find(anahtarKelime) != std::string::npos)
+        {
+            klasikSoruyuYazdir(KlasikSorular[i]);
+        }
+    }
 }
 
 /* kullanıcı a-b-c-d şıklarından birisini girer ve cevabı girilen şık olan sorular listelenir */
@@ -537,6 +571,19 @@ void dogruSikkaGoreListele(
     vector<KlasikSoru> KlasikSorular)
 {
     string soruSikki;
+    cout << "Dogru siklari uzerinden aramak icin cevap sikki giriniz: ";
+    getline(cin >> ws, soruSikki);
+
+    for (int i = 0; i < CoktanSecmeliSorular.size(); i++)
+    {
+        for (int j = 0; j < CoktanSecmeliSorular[i].getSoruSiklari().size(); j++)
+        {
+            if (CoktanSecmeliSorular[i].getSoruSiklari()[j].find(soruSikki) != std::string::npos)
+            {
+                coktanSecmeliSoruyuYazdir(CoktanSecmeliSorular[i]);
+            }
+        }
+    }
 }
 
 /* kullanıcı puan girer, eşleşen sorular listelenir */
