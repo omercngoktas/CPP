@@ -13,8 +13,12 @@ class Hucre {
         int hucreDegeri;
 
     public:
+        Hucre();
+        ~Hucre();
         void setHucreDegeri(int yeniHucreDegeri);
         int getHucreDegeri() { return hucreDegeri; }
 };
+
+Hucre getOrtadakiHucre(std::vector <Hucre> hucreListesi);
 
 #endif

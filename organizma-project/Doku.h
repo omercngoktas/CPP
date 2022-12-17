@@ -11,11 +11,15 @@
 
 class Doku {
     private:
-        std::vector <int> dokuDegerleri;
+        Hucre dokuDegeri;
         
     public:
         void setDokuDegerleri(Hucre hucre);
-        std::vector <int> getDokuDegerleri() { return dokuDegerleri; }
+        Hucre getDokuDegerleri() { return dokuDegeri; }
+        Doku();
+        ~Doku();
 };
+
+Hucre getOrtadakiDoku(std::vector <Doku *> dokuDegerlerli);
 
 #endif

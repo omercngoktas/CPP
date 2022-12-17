@@ -8,9 +8,11 @@
 #include <cstddef>
 #include <algorithm>
 
+#include "Doku.h"
+
 using namespace std;
 
-class BST {
+class BinarySearchTree {
     
     struct node;
 
@@ -18,34 +20,34 @@ class BST {
 
     node* makeEmpty(node* t);
 
-    node* insert(int x, node* t);
+    node* insert(Hucre hucre, node* t);
 
     node* findMin(node* t);
 
     node* findMax(node* t);
 
-    node* remove(int x, node* t);
+    node* remove(Hucre hucre, node* t);
 
     void inorder(node* t);
 
-    node* find(node* t, int x);
+    node* find(node* t, Hucre hucre);
 
     // Function to get the count of nodes
     // in complete binary tree
     int totalNodes(node* root);
 
     public:
-        BST();
+        BinarySearchTree();
 
-        ~BST();
+        ~BinarySearchTree();
 
-        void insert(int x);
+        void insert(Hucre hucre);
 
-        void remove(int x);
+        void remove(Hucre hucre);
 
         void display();
 
-        void search(int x);
+        void search(Hucre hucre);
 
         int numberOfElements();
 };

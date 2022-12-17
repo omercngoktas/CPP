@@ -1,15 +1,13 @@
 #include "BinarySearchTree.h"
 
-struct BST::node {
-        int data;
+struct BinarySearchTree::node {
+        Doku doku;
         node* left;
         node* right;
 };
 
-BST::node* BST::makeEmpty(BST::node* t) {
-    if(t == NULL)
-        return NULL;
-    {
+BinarySearchTree::node* BinarySearchTree::makeEmpty(BinarySearchTree::node* t) {
+    if(t == NULL) return NULL; {
         makeEmpty(t->left);
         makeEmpty(t->right);
         delete t;
@@ -17,58 +15,42 @@ BST::node* BST::makeEmpty(BST::node* t) {
     return NULL;
 }
 
-BST::node* BST::insert(int x, BST::node* t)
-{
-    if(t == NULL)
-    {
+BinarySearchTree::node* BinarySearchTree::insert(Hucre hucre, BinarySearchTree::node* t) {
+    if(t == NULL) {
         t = new node;
-        t->data = x;
+        t->doku.setDokuDegerleri(hucre);
         t->left = t->right = NULL;
     }
-    else if(x < t->data)
-        t->left = insert(x, t->left);
-    else if(x > t->data)
-        t->right = insert(x, t->right);
-    else if(x == t->data)
-        t->left = insert(x, t->left);
+    else if(hucre.getHucreDegeri() < t->doku.getDokuDegerleri().getHucreDegeri()) t->left = insert(hucre, t->left);
+    else if(hucre.getHucreDegeri() > t->doku.getDokuDegerleri().getHucreDegeri()) t->right = insert(hucre, t->right);
+    else if(hucre.getHucreDegeri() == t->doku.getDokuDegerleri().getHucreDegeri()) t->left = insert(hucre, t->left);
     return t;
 }
 
-BST::node* BST::findMin(BST::node* t)
-{
-    if(t == NULL)
-        return NULL;
-    else if(t->left == NULL)
-        return t;
-    else
-        return findMin(t->left);
+BinarySearchTree::node* BinarySearchTree::findMin(BinarySearchTree::node* t) {
+    if(t == NULL) return NULL;
+    else if(t->left == NULL) return t;
+    else return findMin(t->left);
 }
 
-BST::node* BST::findMax(BST::node* t) {
-    if(t == NULL)
-        return NULL;
-    else if(t->right == NULL)
-        return t;
-    else
-        return findMax(t->right);
+BinarySearchTree::node* BinarySearchTree::findMax(BinarySearchTree::node* t) {
+    if(t == NULL) return NULL;
+    else if(t->right == NULL) return t;
+    else return findMax(t->right);
 }
 
-BST::node* BST::remove(int x, BST::node* t) {
+BinarySearchTree::node* BinarySearchTree::remove(Hucre hucre, BinarySearchTree::node* t) {
     node* temp;
-    if(t == NULL)
-        return NULL;
-    else if(x < t->data)
-        t->left = remove(x, t->left);
-    else if(x > t->data)
-        t->right = remove(x, t->right);
-    else if(t->left && t->right)
-    {
+    if(t == NULL) return NULL;
+    else if(hucre.getHucreDegeri() < t->doku.getDokuDegerleri().getHucreDegeri()) t->left = remove(hucre, t->left);
+    else if(hucre.getHucreDegeri() > t->doku.getDokuDegerleri().getHucreDegeri()) t->right = remove(hucre, t->right);
+
+    else if(t->left && t->right) {
         temp = findMin(t->right);
-        t->data = temp->data;
-        t->right = remove(t->data, t->right);
+        t->doku = temp->doku;
+        t->right = remove(t->doku.getDokuDegerleri(), t->right);
     }
-    else
-    {
+    else {
         temp = t;
         if(t->left == NULL)
             t = t->right;
@@ -80,59 +62,55 @@ BST::node* BST::remove(int x, BST::node* t) {
     return t;
 }
 
-void BST::inorder(BST::node* t) {
-    if(t == NULL)
-        return;
+void BinarySearchTree::inorder(BinarySearchTree::node* t) {
+    if(t == NULL) return;
     inorder(t->left);
-    cout << t->data << " ";
+    cout << t->doku.getDokuDegerleri().getHucreDegeri() << " ";
     inorder(t->right);
 }
 
-BST::node* BST::find(BST::node* t, int x) {
-    if(t == NULL)
-        return NULL;
-    else if(x < t->data)
-        return find(t->left, x);
-    else if(x > t->data)
-        return find(t->right, x);
-    else
-        return t;
+BinarySearchTree::node* BinarySearchTree::find(BinarySearchTree::node* t, Hucre hucre) {
+    if(t == NULL) return NULL;
+    else if(hucre.getHucreDegeri() < t->doku.getDokuDegerleri().getHucreDegeri()) return find(t->left, hucre);
+    else if(hucre.getHucreDegeri() > t->doku.getDokuDegerleri().getHucreDegeri()) return find(t->right, hucre);
+    else return t;
 }
 
 // Function to get the count of nodes
 // in complete binary tree
-int BST::totalNodes(BST::node* root) {
-    if (root == NULL)
-        return 0;
+int BinarySearchTree::totalNodes(BinarySearchTree::node* root) {
+    if (root == NULL) return 0;
     int l = totalNodes(root->left);
     int r = totalNodes(root->right);
     return 1 + l + r;
 }
-BST::BST() {
+
+BinarySearchTree::BinarySearchTree() {
     root = NULL;
 }
 
-BST::~BST() {
+BinarySearchTree::~BinarySearchTree() {
     root = makeEmpty(root);
+    cout << "Tree deleted" << endl;
 }
 
-void BST::insert(int x) {
-    root = insert(x, root);
+void BinarySearchTree::insert(Hucre hucre) {
+    root = insert(hucre, root);
 }
 
-void BST::remove(int x) {
-    root = remove(x, root);
+void BinarySearchTree::remove(Hucre hucre) {
+    root = remove(hucre, root);
 }
 
-void BST::display() {
+void BinarySearchTree::display() {
     inorder(root);
     cout << endl;
 }
 
-void BST::search(int x) {
-    root = find(root, x);
+void BinarySearchTree::search(Hucre hucre) {
+    root = find(root, hucre);
 }
 
-int BST::numberOfElements() {
+int BinarySearchTree::numberOfElements() {
     return totalNodes(root);
 }
