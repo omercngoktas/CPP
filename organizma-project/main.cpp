@@ -19,12 +19,14 @@
 
 using namespace std;
 
-void organlariOlustur(string txtDosyaAdi, Organ* &organlar) {
+void organlariOlustur(string txtDosyaAdi, vector <Organ *> &organListesi) {
     ifstream VeriDosyasi(txtDosyaAdi);
     
     string text;
-    int counter = 0;
+    int counter = 0, index = 0;
+
     BinarySearchTree *yeniBST = new BinarySearchTree();
+    Organ *yeniOrgan = new Organ();
 
     while (getline(VeriDosyasi, text)) {
         vector <Doku *> dokuDegerleri;
@@ -39,17 +41,20 @@ void organlariOlustur(string txtDosyaAdi, Organ* &organlar) {
             yeniDoku->setDokuDegerleri(*yeniHucre);
             dokuDegerleri.push_back(yeniDoku);
         }
-        yeniBST->insert(getOrtadakiDoku(dokuDegerleri));
+        // yeniBST->insert(getOrtadakiDoku(dokuDegerleri));
         counter++;
-        if(counter > 19) {
-            counter = 0;
-            organlar->setBinarySearchTree(yeniBST);
-            yeniBST = new BinarySearchTree();
+        Hucre *geciciHucre = new Hucre();
+        geciciHucre->setHucreDegeri(getOrtadakiDoku(dokuDegerleri).getHucreDegeri());
+
+        yeniOrgan->setBinarySearchTree(geciciHucre);
+        if(yeniOrgan->getSizeOfBST() == 20) {
+            //cout << "Size: " << yeniOrgan->getSizeOfBST() << endl;
+            organListesi.push_back(yeniOrgan);
+            yeniOrgan = new Organ();
         }
-        
-        
     }
     // cout << "Size of vector: " << organlar->getBinarySearchTree().size() << endl;
+    cout << "Counter : " << counter << endl;
 }
 
 void addElement(vector <BinarySearchTree *> &BSTS) {
@@ -65,18 +70,43 @@ void addElement(vector <BinarySearchTree *> &BSTS) {
     BSTS.push_back(BST);
 }
 
+void sistemleriOlustur(vector <Sistem *> &sistemListesi, vector <Organ *> organListesi) {
+    Organ *yeniOrgan = new Organ();
+    Sistem *yeniSistem = new Sistem();
+
+    for(int i = 0; i < organListesi.size(); i++) {
+        yeniSistem->setOrganlar(organListesi[i]);
+
+        if(yeniSistem->getSizeOfOrganlar() == 100) {
+            sistemListesi.push_back(yeniSistem);
+            yeniSistem = new Sistem();
+        }
+    }
+}
+
+void organizmayiOlustur(Organizma *&organizma, vector <Sistem *> sistemListesi) {
+    for(int i = 0; i < sistemListesi.size(); i++) {
+        organizma->setSistemler(sistemListesi[i]);
+    }
+}
 
 int main() {
     clock_t start = clock();
-    
-    Organ *organlar = new Organ();
+
     vector <Organ *> organListesi;
-    vector <BinarySearchTree *> BSTs;
+    vector <Sistem *> sistemListesi;
+    Organizma *organizma = new Organizma();
 
     cout << "Start\n";
-    organlariOlustur("Veri.txt", organlar);
+    organlariOlustur("Veri.txt", organListesi);
+    sistemleriOlustur(sistemListesi, organListesi);
+    organizmayiOlustur(organizma, sistemListesi);
+    cout << "Size of organListesi : " << organListesi.size() << endl;
+    cout << "Size of sistemListesi: " << sistemListesi.size() << endl;
+    cout << "Size of organizma: " << organizma->getSizeOfOrganizma(*organizma) << endl;
+    cout << organizma->getSistemler()[0]->getOrganlar()[0]->getSizeOfBST() << endl;
 
-    organlar->displayBinarySearchTrees(organlar->getBinarySearchTree());
+
 
     clock_t end = clock();
     double elapsed = double(end - start)/CLOCKS_PER_SEC;

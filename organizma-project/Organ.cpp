@@ -1,12 +1,14 @@
 #include "Organ.h"
 
-void Organ::setBinarySearchTree(BinarySearchTree *yeniBST) {
-    BinarySearchTrees.push_back(yeniBST);
+void Organ::setBinarySearchTree(Hucre *hucre) {
+    BinarySearchTrees->insert(*hucre);
 }
 
-void Organ::displayBinarySearchTrees(vector <BinarySearchTree *> BinarySearchTrees) {
-    cout << "Size of binary search tree vector: " << BinarySearchTrees.size() << endl;
-}
+// void Organ::displayBinarySearchTrees(vector <BinarySearchTree *> BinarySearchTrees) {
+//     cout << "Size of binary search tree vector: " << BinarySearchTrees.size() << endl;
+// }
+
+int Organ::getSizeOfBST() { return BinarySearchTrees->numberOfElements(); }
 
 Organ::Organ() {
 

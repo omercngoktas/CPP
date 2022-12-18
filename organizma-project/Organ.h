@@ -11,14 +11,15 @@
 
 class Organ {
     private:
-        vector <BinarySearchTree *> BinarySearchTrees;
+        BinarySearchTree *BinarySearchTrees = new BinarySearchTree();
 
     public:
         Organ();
         ~Organ();
-        void setBinarySearchTree(BinarySearchTree *yeniBST);
-        void displayBinarySearchTrees(vector <BinarySearchTree *> BinarySearchTrees);
-        vector <BinarySearchTree *> getBinarySearchTree() { return BinarySearchTrees; }
+        void setBinarySearchTree(Hucre *hucre);
+        int getSizeOfBST();
+        // void displayBinarySearchTrees(vector <BinarySearchTree *> BinarySearchTrees);
+        // vector <BinarySearchTree *> getBinarySearchTree() { return BinarySearchTrees; }
 
 };
 
