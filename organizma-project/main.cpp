@@ -30,7 +30,7 @@ void organlariOlustur(string txtDosyaAdi, vector <Organ *> &organListesi) {
 
     while (getline(VeriDosyasi, text)) {
         vector <Doku *> dokuDegerleri;
-        vector <int> hucreler = tokenize(text);
+        vector <int> hucreler = splitBySpace(text);
         radix_sort(hucreler);
 
         /* radix algoritması ile siralanan hucre sayilari sirasiyla satir satir hucre vectorune eklenir */
@@ -90,6 +90,25 @@ void organizmayiOlustur(Organizma *&organizma, vector <Sistem *> sistemListesi) 
     }
 }
 
+void organizmayiYazdir(Organizma *organizma) {
+    int counter1 = 0;
+    Sistem *sistem;
+    Organ *organ;
+
+    for(int i = 0; i < organizma->getSizeOfOrganizma(); i++) {
+        sistem = organizma->getSistemler()[i];
+        counter1 = 0;
+        for(int j = 0; j < sistem->getSizeOfOrganlar(); j++) {
+            counter1++;
+            organ = sistem->getOrganlar()[j];
+            cout << "- ";
+        }
+        // cout << "Counter1 -> " << counter1 << endl;
+        cout << endl;
+    }
+
+}
+
 int main() {
     clock_t start = clock();
 
@@ -103,9 +122,8 @@ int main() {
     organizmayiOlustur(organizma, sistemListesi);
     cout << "Size of organListesi : " << organListesi.size() << endl;
     cout << "Size of sistemListesi: " << sistemListesi.size() << endl;
-    cout << "Size of organizma: " << organizma->getSizeOfOrganizma(*organizma) << endl;
-    cout << organizma->getSistemler()[0]->getOrganlar()[0]->getSizeOfBST() << endl;
-
+    cout << "Size of organizma: " << organizma->getSizeOfOrganizma() << endl;
+    organizmayiYazdir(organizma);
 
 
     clock_t end = clock();
