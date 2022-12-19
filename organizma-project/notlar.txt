@@ -1,0 +1,16 @@
+sadece ortasındaki değeri değil, dokunun tamamını bstye eklememiz gerekiyor. 
+mutasyona uğradıktan sonra dokunun diğer elemanlarına ihtiyacımız olacak. 
+ancak sizin yaptığınız sekilde de mutasyona ugramadan önceki halini doğru
+çıktı vermesi gerek, ağaçların hepsinin dengesiz olmasından dolayı kodunuzda
+bir hata var gibi.
+
+Organ nesnesi oluşturulduğunda bir new BST oluşturulur.
+Organ nesnesine bir doku eklendiğinde
+dokunun ortanca elamanına göre BST ye eklenir fakat
+BST de heap ten tahsis edilmiş doku nesnesinin adresini de saklaman gerekecek
+ben BST nin içinde hem median(orta değer) hemde dokunun adresini sakladım
+Yani BST ye sadece orta değer aktarılmayacak
+zaten ödev dosyasında BST de doku nesneleri tutulacak diyor.
+organlar = new Organ*[100];
+sistem nesnesi oluşturulduğunda 100 organın adresini saklayabilecek bir pointer dizisi oluşturabilirsin
+Organ **organlar;

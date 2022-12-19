@@ -11,13 +11,17 @@
 
 class Organ {
     private:
-        BinarySearchTree *BinarySearchTrees = new BinarySearchTree();
+        BinarySearchTree* BST;
+        std::vector <Doku *> dokular;
 
     public:
         Organ();
         ~Organ();
-        void setBinarySearchTree(Hucre *hucre);
-        int getSizeOfBST();
+        void setDoku(Doku*);
+        void setOrgan(Doku*);
+        void setBST(Doku*);
+        BinarySearchTree* getBST() { return BST; }
+        std::vector <Doku *> getDokular() { return dokular; }
         // void displayBinarySearchTrees(vector <BinarySearchTree *> BinarySearchTrees);
         // vector <BinarySearchTree *> getBinarySearchTree() { return BinarySearchTrees; }
 

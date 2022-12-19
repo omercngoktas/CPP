@@ -1,0 +1,108 @@
+// C++ Code to insert node and to print inorder traversal
+// using iteration
+#include <bits/stdc++.h>
+using namespace std;
+
+// BST Node
+class Node {
+public:
+	int val;
+	Node* left;
+	Node* right;
+	Node(int val)
+		: val(val)
+		, left(NULL)
+		, right(NULL)
+	{
+	}
+};
+
+// Utility function to insert node in BST
+void insert(Node*& root, int key)
+{
+	Node* node = new Node(key);
+	if (!root) {
+		root = node;
+		return;
+	}
+	Node* prev = NULL;
+	Node* temp = root;
+	while (temp) {
+		if (temp->val > key) {
+			prev = temp;
+			temp = temp->left;
+		}
+		else if (temp->val < key) {
+			prev = temp;
+			temp = temp->right;
+		}
+	}
+	if (prev->val > key)
+		prev->left = node;
+	else
+		prev->right = node;
+}
+
+// Utiltiy function to print inorder traversal
+void inorder(Node* root)
+{
+	Node* temp = root;
+	stack<Node*> st;
+	while (temp != NULL || !st.empty()) {
+		if (temp != NULL) {
+			st.push(temp);
+			temp = temp->left;
+		}
+		else {
+			temp = st.top();
+			st.pop();
+			cout << temp->val << " ";
+			temp = temp->right;
+		}
+	}
+}
+
+// check if bst is balanced according to avl
+int isBalanced(Node* root) {
+	if(root == NULL) return 0;
+  int leftNodeBF = isBalanced(root->left);
+  if(leftNodeBF == -1) return -1;
+  int rightNodeBF = isBalanced(root->right);
+  if(rightNodeBF == -1) return -1;
+  if(abs(leftNodeBF - rightNodeBF) > 1) return -1;
+  else return max(leftNodeBF, rightNodeBF) +1;
+}
+	
+// Driver code
+int main()
+{
+	Node* root = NULL;
+  insert(root, 101);
+  insert(root, 58);
+  insert(root, 24);
+  insert(root, 10);
+  insert(root, 42);
+  insert(root, 76);
+  insert(root, 65);
+  insert(root, 85);
+  insert(root, 229);
+  insert(root, 173);
+  insert(root, 138);
+  insert(root, 116);
+  insert(root, 153);
+  insert(root, 198);
+  insert(root, 183);
+  insert(root, 213);
+  insert(root, 254);
+  insert(root, 232);
+  insert(root, 264);
+  insert(root, 274);
+  
+	inorder(root);
+  cout << endl << "Root value -> " << root->val << endl;
+  cout << "Balance factor -> " << isBalanced(root) << endl;
+
+	return 0;
+}
+
+// This code is contributed by Tapesh(tapeshdua420)

@@ -7,49 +7,34 @@
 #include <sstream>
 #include <cstddef>
 #include <algorithm>
-
 #include "Doku.h"
-
+#include <math.h>
 using namespace std;
 
 class BinarySearchTree {
-    
-    struct node;
-
-    node* root;
-
-    node* makeEmpty(node* t);
-
-    node* insert(Hucre hucre, node* t);
-
-    node* findMin(node* t);
-
-    node* findMax(node* t);
-
-    node* remove(Hucre hucre, node* t);
-
-    void inorder(node* t);
-
-    node* find(node* t, Hucre hucre);
-
-    // Function to get the count of nodes
-    // in complete binary tree
-    int totalNodes(node* root);
+    private:
+        struct node;
+        node* root;
+        node* makeEmpty(node* t);
+        node* insert(Doku*, node* t);
+        node* findMin(node* t);
+        node* findMax(node* t);
+        node* remove(Doku*, node* t);
+        void inorder(node* t);
+        node* find(node* t, Doku*);
+        int totalNodes(node* root);
+        int checkIfBalancedAVL(node* t);
 
     public:
         BinarySearchTree();
-
         ~BinarySearchTree();
-
-        void insert(Hucre hucre);
-
-        void remove(Hucre hucre);
-
+        void insert(Doku*);
+        void remove(Doku*);
         void display();
-
-        void search(Hucre hucre);
-
+        void search(Doku*);
         int numberOfElements();
+        int checkBalance() { return checkIfBalancedAVL(root); }
+        int getRootValue();
 };
 
 #endif

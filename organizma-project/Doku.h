@@ -8,14 +8,18 @@
 #include <cstddef>
 #include <algorithm>
 #include "Hucre.h"
+#include "Radix.h"
 
 class Doku {
     private:
-        Hucre dokuDegeri;
+        std::vector <Hucre *> hucreler;
+        int ortaDokuDegeri;
         
     public:
-        void setDokuDegerleri(Hucre hucre);
-        Hucre getDokuDegerleri() { return dokuDegeri; }
+        void setDokuDegerleri(Hucre *hucre);
+        std::vector <Hucre*> getDokuDegerleri() { return hucreler; }
+        void setOrtaDeger();
+        int getOrtaDeger();
         Doku();
         ~Doku();
 };

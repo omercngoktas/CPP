@@ -1,7 +1,8 @@
 #include "BinarySearchTree.h"
 
 struct BinarySearchTree::node {
-        Doku doku;
+        Doku* doku = new Doku();
+        int ortaDokuDegeri;
         node* left;
         node* right;
 };
@@ -15,15 +16,17 @@ BinarySearchTree::node* BinarySearchTree::makeEmpty(BinarySearchTree::node* t) {
     return NULL;
 }
 
-BinarySearchTree::node* BinarySearchTree::insert(Hucre hucre, BinarySearchTree::node* t) {
+BinarySearchTree::node* BinarySearchTree::insert(Doku* doku, BinarySearchTree::node* t) {
     if(t == NULL) {
         t = new node;
-        t->doku.setDokuDegerleri(hucre);
+        t->doku = doku;
+        t->ortaDokuDegeri = doku->getOrtaDeger();
         t->left = t->right = NULL;
     }
-    else if(hucre.getHucreDegeri() < t->doku.getDokuDegerleri().getHucreDegeri()) t->left = insert(hucre, t->left);
-    else if(hucre.getHucreDegeri() > t->doku.getDokuDegerleri().getHucreDegeri()) t->right = insert(hucre, t->right);
-    else if(hucre.getHucreDegeri() == t->doku.getDokuDegerleri().getHucreDegeri()) t->left = insert(hucre, t->left);
+
+    else if(doku->getOrtaDeger() < t->ortaDokuDegeri) { t->left = insert(doku, t->left); }
+    else if(doku->getOrtaDeger() > t->ortaDokuDegeri) { t->right = insert(doku, t->right); }
+    else if(doku->getOrtaDeger() == t->ortaDokuDegeri) { t->left = insert(doku, t->left); }
     return t;
 }
 
@@ -39,40 +42,36 @@ BinarySearchTree::node* BinarySearchTree::findMax(BinarySearchTree::node* t) {
     else return findMax(t->right);
 }
 
-BinarySearchTree::node* BinarySearchTree::remove(Hucre hucre, BinarySearchTree::node* t) {
+BinarySearchTree::node* BinarySearchTree::remove(Doku* doku, BinarySearchTree::node* t) {
     node* temp;
     if(t == NULL) return NULL;
-    else if(hucre.getHucreDegeri() < t->doku.getDokuDegerleri().getHucreDegeri()) t->left = remove(hucre, t->left);
-    else if(hucre.getHucreDegeri() > t->doku.getDokuDegerleri().getHucreDegeri()) t->right = remove(hucre, t->right);
-
+    else if(doku->getOrtaDeger() < t->ortaDokuDegeri) t->left = remove(doku, t->left);
+    else if(doku->getOrtaDeger() > t->ortaDokuDegeri) t->right = remove(doku, t->right);
     else if(t->left && t->right) {
         temp = findMin(t->right);
         t->doku = temp->doku;
-        t->right = remove(t->doku.getDokuDegerleri(), t->right);
+        t->right = remove(t->doku, t->right);
     }
     else {
         temp = t;
-        if(t->left == NULL)
-            t = t->right;
-        else if(t->right == NULL)
-            t = t->left;
+        if(t->left == NULL) t = t->right;
+        else if(t->right == NULL) t = t->left;
         delete temp;
     }
-
     return t;
 }
 
 void BinarySearchTree::inorder(BinarySearchTree::node* t) {
     if(t == NULL) return;
     inorder(t->left);
-    cout << t->doku.getDokuDegerleri().getHucreDegeri() << " ";
+    cout << t->ortaDokuDegeri << " ";
     inorder(t->right);
 }
 
-BinarySearchTree::node* BinarySearchTree::find(BinarySearchTree::node* t, Hucre hucre) {
+BinarySearchTree::node* BinarySearchTree::find(BinarySearchTree::node* t, Doku* doku) {
     if(t == NULL) return NULL;
-    else if(hucre.getHucreDegeri() < t->doku.getDokuDegerleri().getHucreDegeri()) return find(t->left, hucre);
-    else if(hucre.getHucreDegeri() > t->doku.getDokuDegerleri().getHucreDegeri()) return find(t->right, hucre);
+    else if(doku->getOrtaDeger() < t->ortaDokuDegeri) return find(t->left, doku);
+    else if(doku->getOrtaDeger() > t->ortaDokuDegeri) return find(t->right, doku);
     else return t;
 }
 
@@ -94,12 +93,21 @@ BinarySearchTree::~BinarySearchTree() {
     cout << "Tree deleted" << endl;
 }
 
-void BinarySearchTree::insert(Hucre hucre) {
-    root = insert(hucre, root);
+void BinarySearchTree::insert(Doku* doku) {
+    try
+    {
+        root = insert(doku, root);
+    }
+    catch(const std::exception& e)
+    {
+        std::cerr << e.what() << '\n';
+    }
+    
+    
 }
 
-void BinarySearchTree::remove(Hucre hucre) {
-    root = remove(hucre, root);
+void BinarySearchTree::remove(Doku* doku) {
+    root = remove(doku, root);
 }
 
 void BinarySearchTree::display() {
@@ -107,10 +115,24 @@ void BinarySearchTree::display() {
     cout << endl;
 }
 
-void BinarySearchTree::search(Hucre hucre) {
-    root = find(root, hucre);
+void BinarySearchTree::search(Doku* doku) {
+    root = find(root, doku);
 }
 
 int BinarySearchTree::numberOfElements() {
     return totalNodes(root);
+}
+
+int BinarySearchTree::checkIfBalancedAVL(node* root) {
+    if(root == NULL) return 0;
+    int leftNodeBF = checkIfBalancedAVL(root->left);
+    if(leftNodeBF == -1) return -1;
+    int rightNodeBF = checkIfBalancedAVL(root->right);
+    if(rightNodeBF == -1) return -1;
+    if(abs(leftNodeBF - rightNodeBF) > 1) return -1;
+    else return max(leftNodeBF, rightNodeBF) + 1;
+}
+
+int BinarySearchTree::getRootValue() {
+    return root->doku->getOrtaDeger();
 }
