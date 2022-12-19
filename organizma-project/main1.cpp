@@ -116,6 +116,15 @@ void mutasyonaUgrat(Organizma* &organizma) {
     cout << "Coutner : " << counter << endl;
 }
 
+void test(vector <Organ*> organlar) {
+    for(int i = 0; i < organlar.size(); i++) {
+        for(int j = 0; j < organlar[0]->getBST()->numberOfElements(); j++) {
+            cout << organlar[0]->getBST()->numberOfElements() << " ";
+        }
+    }
+    cout << "test";
+}
+
 int main() {
     clock_t start = clock();
     vector <Doku*> dokular;
@@ -125,14 +134,17 @@ int main() {
 
     dokulariOlustur("Veri.txt", dokular);
     organlariOlustur(organlar, dokular);
-    dokular.clear();
+    //dokular.clear();
     sistemleriOlustur(sistemler, organlar);
     organlar.clear();
     organizmaOlustur(organizma, sistemler);
     sistemler.clear();
     ekranaYazdir(organizma);
+
+    test(organlar);
+
     // cin.ignore();
-    mutasyonaUgrat(organizma);
+    // mutasyonaUgrat(organizma);
 
     clock_t end = clock();
     double elapsed = double(end - start)/CLOCKS_PER_SEC;
