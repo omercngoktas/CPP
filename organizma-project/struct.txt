@@ -1,0 +1,20 @@
+class Hucre {
+    int hucreDegeri;
+}
+
+class Doku {
+    vector <Doku*> dokuDegerleri;
+}
+
+class Organ {
+    BinarySearchTree* BST;
+    vector <Doku*> dokular;
+}
+
+class Sistem {
+    vector <Organ*> organlar;
+}
+
+class Organizma {
+    vector <Sistem*> sistemler;
+}
