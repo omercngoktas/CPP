@@ -9,33 +9,48 @@
 
 #include "Radix.h"
 #include "Hucre.h"
-#include "BinarySearchTree.h"
+#include "IkiliAramaAgaci.h"
 #include "Doku.h"
 #include "Organ.h"
 #include "Organizma.h"
 #include "Sistem.h"
-
-#include <time.h>
+#include "Split.h"
 
 using namespace std;
 
 void dokulariOlustur(string txtDosyaAdi, vector <Doku *> &dokular) {
-    ifstream VeriDosyasi(txtDosyaAdi);
+    ifstream VeriDosyasi;
+    VeriDosyasi.open(txtDosyaAdi);
+    if(!VeriDosyasi) {
+        VeriDosyasi.close();
+        VeriDosyasi.open("../Veri.txt");
+    } if(!VeriDosyasi) {
+        VeriDosyasi.close();
+        VeriDosyasi.open("./src/Veri.txt");
+    } if(!VeriDosyasi) {
+        VeriDosyasi.close();
+        VeriDosyasi.open("../src/Veri.txt");
+    }
+    
     string text;
     int counter = 0, index = 0;
 
     while (getline(VeriDosyasi, text)) {
-        vector <int> hucreler = splitBySpace(text);
+        Split* split = new Split(text);
+        vector <int> hucreler = split->splitTextBySpace();
         counter++;
         Doku *yeniDoku = new Doku();
         for(int i = 0; i < hucreler.size(); i++) {
             Hucre *yeniHucre = new Hucre();
             yeniHucre->setHucreDegeri(hucreler[i]);
             yeniDoku->setDokuDegerleri(yeniHucre);
+            // delete yeniHucre;
         }
         yeniDoku->setOrtaDeger();
         dokular.push_back(yeniDoku);
+        // delete split;
     }
+    VeriDosyasi.close();
 }
 
 void organlariOlustur(vector <Organ *> &organlar, vector <Doku *> dokular) {
@@ -51,22 +66,11 @@ void organlariOlustur(vector <Organ *> &organlar, vector <Doku *> dokular) {
             }
             organlar.push_back(yeniOrgan);
             yeniOrgan = new Organ();
-            //vector <Doku *> geciciDokular;
             counter++;
         }
     }
-}
-
-void ekranaBastir(vector <Organ*> organlar) {
-    for(int i = 0; i < organlar.size(); i++) {
-        int balanceDegeri = organlar[i]->getBST()->checkBalance();
-        if(balanceDegeri > 0) {
-            cout << " ";
-        } else {
-            cout << "#";
-        }
-        if(i %100 == 0) cout << endl;
-    }
+    geciciDokular.clear();
+    // delete yeniOrgan;
 }
 
 void sistemleriOlustur(vector <Sistem*> &sistemler, vector <Organ*> organlar) {
@@ -78,6 +82,7 @@ void sistemleriOlustur(vector <Sistem*> &sistemler, vector <Organ*> organlar) {
             yeniSistem = new Sistem();
         }
     }
+    // delete yeniSistem;
 }
 
 void organizmaOlustur(Organizma* &organizma, vector <Sistem*> sistemler) {
@@ -86,7 +91,7 @@ void organizmaOlustur(Organizma* &organizma, vector <Sistem*> sistemler) {
     }
 }
 
-void ekranaYazdir(Organizma* organizma) {
+void organizmayiYazdir(Organizma* organizma) {
     for(int i = 0; i < organizma->getSistemler().size(); i++) {
         for(int j = 0; j < organizma->getSistemler()[i]->getOrganlar().size(); j++) {
             int dengeDegeri = organizma->getSistemler()[i]->getOrganlar()[j]->getBST()->checkBalance();
@@ -113,20 +118,20 @@ Organ* mutasyonaUgrat(Organ* mutasyonsuzOrgan) {
         }
         mutasyonluOrgan->setOrgan(mutasyonluDoku);
     }
-    mutasyonsuzDokular.clear();
+    // mutasyonsuzDokular.clear();
     int balance = mutasyonluOrgan->getBST()->checkBalance();
     return mutasyonluOrgan;
 }
 
 void mutasyonKontrolEt(Organizma* &yeniOrganizma) {
-    BinarySearchTree* geciciBST;
+    IkiliAramaAgaci* geciciBST;
     /* organizmada bulunan sistemlerin içerisindeyiz */
     for(int i = 0; i < yeniOrganizma->getSistemler().size(); i++) {
         /* sistemin içerisinde bulunan organın içerisindeyiz */
         for(int j = 0; j < yeniOrganizma->getSistemler()[i]->getOrganlar().size(); j++) {
             geciciBST = yeniOrganizma->getSistemler()[i]->getOrganlar()[j]->getBST();
             /* if koşuluna girerse BST'nin kök değeri 50 ile kalansız bölünebilmektedir */
-            if(geciciBST->getRootValue() %50 == 0) {
+            if(geciciBST->getkokOrganValue() %50 == 0) {
                 Organ* mutasyonluOrgan = new Organ();
                 mutasyonluOrgan = mutasyonaUgrat(yeniOrganizma->getSistemler()[i]->getOrganlar()[j]);
                 yeniOrganizma->getSistemler()[i]->getOrganlar()[j]->mutasyonGecir(mutasyonluOrgan);
@@ -136,7 +141,6 @@ void mutasyonKontrolEt(Organizma* &yeniOrganizma) {
 }
 
 int main() {
-    clock_t start = clock();
     vector <Doku*> dokular;
     vector <Organ*> organlar;
     vector <Sistem*> sistemler;
@@ -144,20 +148,18 @@ int main() {
 
     dokulariOlustur("Veri.txt", dokular);
     organlariOlustur(organlar, dokular);
-    dokular.clear();
+    // dokular.clear();
     sistemleriOlustur(sistemler, organlar);
-    organlar.clear();
+    // organlar.clear();
     organizmaOlustur(organizma, sistemler);
-    sistemler.clear();
+    // sistemler.clear();
     cout << "\t\t\t\tORGANIZMA\n";
-    ekranaYazdir(organizma);
+    organizmayiYazdir(organizma);
     cin.ignore();
     mutasyonKontrolEt(organizma);
     cout << "\t\tORGANIZMA (MUTASYONA UGRADI)\n";
-    ekranaYazdir(organizma);
-
-    clock_t end = clock();
-    double elapsed = double(end - start)/CLOCKS_PER_SEC;
-    cout << "Timer: " << elapsed << endl;
+    organizmayiYazdir(organizma);
+    // delete organizma;
+    system("pause");
     return 0;
 }

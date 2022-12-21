@@ -1,5 +1,5 @@
-organizma: Doku.o Hucre.o main.o Organ.o Organizma.o Radix.o Sistem.o BinarySearchTree.o
-	g++ Doku.o Hucre.o main.o Organ.o Organizma.o Radix.o Sistem.o BinarySearchTree.o -o organizma
+organizma: Doku.o Hucre.o main.o Organ.o Organizma.o Radix.o Sistem.o IkiliAramaAgaci.o Split.o
+	g++ Doku.o Hucre.o main.o Organ.o Organizma.o Radix.o Sistem.o IkiliAramaAgaci.o Split.o -o organizma
 
 Doku.o: Doku.cpp
 	g++ -c Doku.cpp
@@ -22,8 +22,11 @@ Radix.o: Radix.cpp
 Sistem.o: Sistem.cpp
 	g++ -c Sistem.cpp
 
-BinarySearchTree.o: BinarySearchTree.cpp
-	g++ -c BinarySearchTree.cpp
+IkiliAramaAgaci.o: IkiliAramaAgaci.cpp
+	g++ -c IkiliAramaAgaci.cpp
+
+Split.o: Split.cpp
+	g++ -c Split.cpp
 
 clean:
 	rm -f *.o organizma

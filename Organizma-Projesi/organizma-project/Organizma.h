@@ -11,14 +11,14 @@
 
 class Organizma {
     private:
-        std::vector <Sistem *> sistemler;
+        std::vector <Sistem*> sistemler;
 
     public:
         Organizma();
         ~Organizma();
-        void setSistemler(Sistem *yeniSistem);
+        void setSistemler(Sistem*);
         int getSizeOfOrganizma() { return sistemler.size(); }
-        std::vector <Sistem *> getSistemler() { return sistemler; }
+        std::vector <Sistem*> getSistemler() { return sistemler; }
 };
 
 #endif

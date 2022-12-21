@@ -12,13 +12,13 @@
 
 class Sistem {
     private:
-        vector <Organ *> organlar;
+        vector <Organ*> organlar;
 
     public:
         Sistem();
         ~Sistem();
-        void setOrganlar(Organ *yeniOrgan);
-        std::vector <Organ *> getOrganlar() { return organlar; }
+        void setOrganlar(Organ*);
+        std::vector <Organ*> getOrganlar() { return organlar; }
         int getSizeOfOrganlar() { return organlar.size(); }
 };
 

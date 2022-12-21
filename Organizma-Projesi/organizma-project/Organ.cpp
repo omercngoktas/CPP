@@ -10,11 +10,11 @@ Organ::~Organ() {}
     geçirmiş organdaki değerleri bu organa ekler.
 */
 void Organ::mutasyonGecir(Organ* mutasyonluOrgan) {
-    BST = new BinarySearchTree();
+    BST = new IkiliAramaAgaci();
     std::vector <Doku*> mutasyonluDokular;
     for(int i = 0; i < mutasyonluOrgan->getDokular().size(); i++) {
         mutasyonluDokular.push_back(mutasyonluOrgan->getDokular()[i]);
-        BST->insert(mutasyonluOrgan->getDokular()[i]);
+        BST->dokuEkle(mutasyonluOrgan->getDokular()[i]);
     }
 }
 
@@ -24,5 +24,5 @@ void Organ::mutasyonGecir(Organ* mutasyonluOrgan) {
 */
 void Organ::setOrgan(Doku* yeniDoku) {
     dokular.push_back(yeniDoku);
-    BST->insert(yeniDoku);
+    BST->dokuEkle(yeniDoku);
 }
