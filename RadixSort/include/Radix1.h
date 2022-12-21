@@ -1,10 +1,10 @@
 #ifndef RADIX_HPP
 #define RADIX_HPP
 
-#include "Queue.hpp"
+#include "Queue.h"
 #include <cmath>
 
-class Radix{
+class Radix1{
 	private:	
 		int* numbers;
 		int length;
@@ -16,9 +16,9 @@ class Radix{
 		int StepCount(int);
 		int* QueueCurrentLengths();
 	public:
-		Radix(int*, int);
+		Radix1(int*, int);
 		int* Sort();
-		~Radix();
+		~Radix1();
 };
 
 #endif

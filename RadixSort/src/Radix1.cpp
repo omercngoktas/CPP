@@ -1,13 +1,13 @@
-#include "Radix.hpp"
+#include "../include/Radix1.h"
 
-int Radix::MaxStepNumber(){
+int Radix1::MaxStepNumber(){
 	int max=0;
 	for(int i=0;i<length;i++){
 		if(StepCount(numbers[i])>max) max = StepCount(numbers[i]);
 	}
 	return max;
 }
-int Radix::StepCount(int number){
+int Radix1::StepCount(int number){
 	number = abs(number);
 	int basamak=0;
 	while(number>0){
@@ -16,7 +16,7 @@ int Radix::StepCount(int number){
 	}
 	return basamak;
 }
-Radix::Radix(int *numbers, int length){
+Radix1::Radix1(int *numbers, int length){
 	this->numbers = new int[length];
 	this->length = length;
 	for(int i=0;i<length;i++){ this->numbers[i] = numbers[i]; }
@@ -24,19 +24,19 @@ Radix::Radix(int *numbers, int length){
 	for(int j=0;j<10;j++){ queues[j] = new Queue<int>(); }
 	maxStep = MaxStepNumber();
 }
-int* Radix::QueueCurrentLengths(){
+int* Radix1::QueueCurrentLengths(){
 	int *lengths = new int[10];
 	for(int i=0;i<10;i++){
 		lengths[i] = queues[i]->count();
 	}
 	return lengths;
 }
-int Radix::power(int e){
+int Radix1::power(int e){
 	int result=1;
 	for(int i=0;i<e;i++) result *= 10;
 	return result;
 }
-int* Radix::Sort(){
+int* Radix1::Sort(){
 	int numberIndex=0;
 	// read from array once and add to queues
 	for(;numberIndex<length;numberIndex++){
@@ -72,7 +72,7 @@ int* Radix::Sort(){
 		
 	return ordered;
 }
-Radix::~Radix(){	
+Radix1::~Radix1(){	
 	delete [] numbers;
 	for(int i=0;i<10;i++) delete queues[i];
 	delete [] queues;
