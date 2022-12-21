@@ -16,12 +16,12 @@ class Doku {
         int ortaDokuDegeri;
         
     public:
+        Doku();
+        ~Doku();
         void setDokuDegerleri(Hucre *hucre);
         std::vector <Hucre*> getDokuDegerleri() { return hucreler; }
         void setOrtaDeger();
         int getOrtaDeger();
-        Doku();
-        ~Doku();
 };
 
 Hucre getOrtadakiDoku(std::vector <Doku *> dokuDegerlerli);

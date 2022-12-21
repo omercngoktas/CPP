@@ -19,6 +19,4 @@ class Hucre {
         int getHucreDegeri() { return hucreDegeri; }
 };
 
-Hucre getOrtadakiHucre(std::vector <Hucre> hucreListesi);
-
 #endif

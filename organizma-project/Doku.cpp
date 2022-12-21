@@ -1,9 +1,15 @@
 #include "Doku.h"
 
+/* aldığı hücre objesini doku'ya ekler */
 void Doku::setDokuDegerleri(Hucre *yeniHucre) { hucreler.push_back(yeniHucre); }
 
+/* orta değeri return eden fonksiyon */
 int Doku::getOrtaDeger() { return ortaDokuDegeri; }
 
+/*
+    doku'nun içerisinde bulunan hucre vectorunu radix ile küçükten 
+    büyüğe sıralayarak ortada bulunan değeri ortaDokuDegeri'ne atar
+*/
 void Doku::setOrtaDeger() {
     std::vector <int> hucreDegerleri;
     for(int i = 0; i < hucreler.size(); i++) {
@@ -12,9 +18,6 @@ void Doku::setOrtaDeger() {
     Radix radix;
     radix.radixSort(hucreDegerleri);
     ortaDokuDegeri =  hucreDegerleri[hucreDegerleri.size() / 2];
-    // std::ofstream outfile("cikti.txt", std::ios::app);
-    // outfile << ortaDokuDegeri << "\n";
-    // outfile.close();
 }
 
 Doku::Doku() {

@@ -11,20 +11,16 @@
 
 class Organ {
     private:
-        BinarySearchTree* BST;
+        BinarySearchTree* BST = new BinarySearchTree();
         std::vector <Doku *> dokular;
 
     public:
         Organ();
         ~Organ();
-        void setDoku(Doku*);
         void setOrgan(Doku*);
-        void setBST(Doku*);
+        void mutasyonGecir(Organ*);
         BinarySearchTree* getBST() { return BST; }
         std::vector <Doku *> getDokular() { return dokular; }
-        // void displayBinarySearchTrees(vector <BinarySearchTree *> BinarySearchTrees);
-        // vector <BinarySearchTree *> getBinarySearchTree() { return BinarySearchTrees; }
-
 };
 
 #endif

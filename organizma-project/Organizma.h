@@ -14,6 +14,8 @@ class Organizma {
         std::vector <Sistem *> sistemler;
 
     public:
+        Organizma();
+        ~Organizma();
         void setSistemler(Sistem *yeniSistem);
         int getSizeOfOrganizma() { return sistemler.size(); }
         std::vector <Sistem *> getSistemler() { return sistemler; }

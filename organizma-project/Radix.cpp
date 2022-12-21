@@ -24,6 +24,10 @@ void Radix::radixSort(std::vector <int> &hucreler) {
     }
 }
 
+/*
+    bu fonksiyon bir satırı alarak boşluk karakteriyle
+    tüm sayıları ayırır ve int vector'u olarak return eder
+*/
 std::vector<int> splitBySpace(std::string text) {
     std::stringstream iss(text);
     int hucreDegeri;

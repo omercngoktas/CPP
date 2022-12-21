@@ -1,11 +1,9 @@
 #include "Hucre.h"
 
+/* aldığı int değeri hucreDegeri'ne eşitler */
 void Hucre::setHucreDegeri(int yeniHucreDegeri) { hucreDegeri = yeniHucreDegeri; }
 
-Hucre getOrtadakiHucre(std::vector <Hucre> hucreListesi) {
-    return hucreListesi[hucreListesi.size()/2];
-}
-
+/*  */
 Hucre::Hucre() {
     int random = rand();
     // std::cout << "Hucre " << random << " degeriyle olusturuldu." << std::endl;
