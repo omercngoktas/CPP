@@ -112,21 +112,19 @@ int main() {
 
     dokulariOlustur("Veri.txt", dokular);
     organlariOlustur(organlar, dokular);
-    // dokular.clear();
+    dokular.clear();
     sistemleriOlustur(sistemler, organlar);
-    // organlar.clear();
+    organlar.clear();
     organizmaOlustur(organizma, sistemler);
-    // sistemler.clear();
+    sistemler.clear();
     cout << "\t\t\t\tORGANIZMA\n";
     organizmayiYazdir(organizma);
-    cin.ignore();
     Kontrol* kontrol = new Kontrol(organizma);
     kontrol->mutasyonKontrolEt();
-
-    // mutasyonKontrolEt(organizma);
+    cin.ignore();
     cout << "\t\tORGANIZMA (MUTASYONA UGRADI)\n";
     organizmayiYazdir(organizma);
-    // delete organizma;
+    delete organizma;
     system("pause");
     return 0;
 }
