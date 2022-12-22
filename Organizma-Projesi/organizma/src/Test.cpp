@@ -15,6 +15,7 @@
 #include "Organizma.h"
 #include "Sistem.h"
 #include "Split.h"
+#include "Kontrol.h"
 
 using namespace std;
 
@@ -102,49 +103,12 @@ void organizmayiYazdir(Organizma* organizma) {
     }
 }
 
-Organ* mutasyonaUgrat(Organ* mutasyonsuzOrgan) {
-    vector <Doku*> mutasyonsuzDokular = mutasyonsuzOrgan->getDokular();
-    Organ* mutasyonluOrgan = new Organ();
-    
-    for(int i = 0; i < mutasyonsuzDokular.size(); i++) {
-        Doku* mutasyonluDoku = new Doku();
-        for(int j = 0; j < mutasyonsuzDokular[i]->getDokuDegerleri().size(); j++) {
-            int yeniDeger = mutasyonsuzDokular[i]->getDokuDegerleri()[j]->getHucreDegeri();
-            if(yeniDeger %2 == 0) yeniDeger = yeniDeger / 2;
-            Hucre* mutasyonluHucre = new Hucre();
-            mutasyonluHucre->setHucreDegeri(yeniDeger);
-            mutasyonluDoku->setDokuDegerleri(mutasyonluHucre);
-            mutasyonluDoku->setOrtaDeger();
-        }
-        mutasyonluOrgan->setOrgan(mutasyonluDoku);
-    }
-    // mutasyonsuzDokular.clear();
-    int balance = mutasyonluOrgan->getBST()->checkBalance();
-    return mutasyonluOrgan;
-}
-
-void mutasyonKontrolEt(Organizma* &yeniOrganizma) {
-    IkiliAramaAgaci* geciciBST;
-    /* organizmada bulunan sistemlerin içerisindeyiz */
-    for(int i = 0; i < yeniOrganizma->getSistemler().size(); i++) {
-        /* sistemin içerisinde bulunan organın içerisindeyiz */
-        for(int j = 0; j < yeniOrganizma->getSistemler()[i]->getOrganlar().size(); j++) {
-            geciciBST = yeniOrganizma->getSistemler()[i]->getOrganlar()[j]->getBST();
-            /* if koşuluna girerse BST'nin kök değeri 50 ile kalansız bölünebilmektedir */
-            if(geciciBST->getkokOrganValue() %50 == 0) {
-                Organ* mutasyonluOrgan = new Organ();
-                mutasyonluOrgan = mutasyonaUgrat(yeniOrganizma->getSistemler()[i]->getOrganlar()[j]);
-                yeniOrganizma->getSistemler()[i]->getOrganlar()[j]->mutasyonGecir(mutasyonluOrgan);
-            }
-        }
-    }
-}
-
 int main() {
     vector <Doku*> dokular;
     vector <Organ*> organlar;
     vector <Sistem*> sistemler;
     Organizma *organizma = new Organizma();
+    
 
     dokulariOlustur("Veri.txt", dokular);
     organlariOlustur(organlar, dokular);
@@ -156,7 +120,10 @@ int main() {
     cout << "\t\t\t\tORGANIZMA\n";
     organizmayiYazdir(organizma);
     cin.ignore();
-    mutasyonKontrolEt(organizma);
+    Kontrol* kontrol = new Kontrol(organizma);
+    kontrol->mutasyonKontrolEt();
+
+    // mutasyonKontrolEt(organizma);
     cout << "\t\tORGANIZMA (MUTASYONA UGRADI)\n";
     organizmayiYazdir(organizma);
     // delete organizma;

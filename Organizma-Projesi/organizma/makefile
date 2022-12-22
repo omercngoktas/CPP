@@ -9,7 +9,8 @@ compile:
 	g++ -I ./include/ -o ./lib/Radix.o -c ./src/Radix.cpp
 	g++ -I ./include/ -o ./lib/Sistem.o -c ./src/Sistem.cpp
 	g++ -I ./include/ -o ./lib/Split.o -c ./src/Split.cpp
-	g++ -I ./include/ -o ./bin/Organizma ./lib/Doku.o ./lib/Hucre.o ./lib/IkiliAramaAgaci.o ./lib/Organ.o ./lib/Organizma.o ./lib/Radix.o ./lib/Sistem.o ./lib/Split.o ./src/main.cpp
+	g++ -I ./include/ -o ./lib/Kontrol.o -c ./src/Kontrol.cpp
+	g++ -I ./include/ -o ./bin/Organizma ./lib/Doku.o ./lib/Hucre.o ./lib/IkiliAramaAgaci.o ./lib/Organ.o ./lib/Organizma.o ./lib/Radix.o ./lib/Sistem.o ./lib/Split.o  ./lib/Kontrol.o ./src/Test.cpp
 
 run:
 	./bin/Organizma
