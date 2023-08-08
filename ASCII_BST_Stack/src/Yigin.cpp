@@ -1,158 +1,92 @@
 #include "../include/Yigin.h"
 
-Stack::Stack() : elements(nullptr), topIndex(-1) {}
+Yigin::Yigin() : sayilar(nullptr), son_index(-1) {}
 
-Stack::~Stack() {
-    delete[] elements;
+Yigin::~Yigin() {
+    delete[] sayilar;
 }
 
-void Stack::push(int item) {
-    int* newElements = new int[topIndex + 2];
-    for (int i = 0; i <= topIndex; i++) {
-        newElements[i] = elements[i];
+void Yigin::push(int item) {
+    int* yeni_sayilar = new int[son_index + 2];
+    for (int i = 0; i <= son_index; i++) {
+        yeni_sayilar[i] = sayilar[i];
     }
-    newElements[topIndex + 1] = item;
+    yeni_sayilar[son_index + 1] = item;
 
-    delete[] elements;
-    elements = newElements;
-    topIndex++;
+    delete[] sayilar;
+    sayilar = yeni_sayilar;
+    son_index++;
 }
 
-void Stack::pop() {
+void Yigin::pop() {
     if (!empty()) {
-        topIndex--;
+        son_index--;
     }
 }
 
-int Stack::top() const {
+int Yigin::top() const {
     if (!empty()) {
-        return elements[topIndex];
+        return sayilar[son_index];
     }
-
     return -1;
 }
 
-bool Stack::empty() const {
-    return topIndex == -1;
+bool Yigin::empty() const {
+    return son_index == -1;
 }
 
-int Stack::size() const {
-    return topIndex + 1;
-}
+YiginListesi::YiginListesi() : bas(nullptr), son(nullptr) {}
 
-void Stack::display() const {
-    if (empty()) {
-        std::cout << "Stack is empty." << std::endl;
-        return;
-    }
-
-    std::cout << "Stack items: ";
-    for (int i = topIndex; i >= 0; i--) {
-        std::cout << elements[i] << " ";
-    }
-    std::cout << std::endl;
-}
-
-
-
-
-
-StackList::StackList() : head(nullptr), tail(nullptr) {}
-
-StackList::~StackList() {
-    Node* current = head;
-    while (current) {
-        Node* next = current->next;
-        delete current->stack;
-        delete current;
-        current = next;
+YiginListesi::~YiginListesi() {
+    Dugum* suanki_dugum = bas;
+    while (suanki_dugum) {
+        Dugum* sonraki = suanki_dugum->sonraki;
+        delete suanki_dugum->yigin;
+        delete suanki_dugum;
+        suanki_dugum = sonraki;
     }
 }
 
-void StackList::addStack(Stack* s) {
-    Node* newNode = new Node(s);
+void YiginListesi::yiginEkle(Yigin* s) {
+    Dugum* yeniDugum = new Dugum(s);
 
-    if (!head) {
-        head = newNode;
-        tail = newNode;
+    if (!bas) {
+        bas = yeniDugum;
+        son = yeniDugum;
     } else {
-        tail->next = newNode;
-        tail = newNode;
+        son->sonraki = yeniDugum;
+        son = yeniDugum;
     }
 }
 
-void StackList::removeStack(Stack* s) {
-    Node* current = head;
-    Node* prev = nullptr;
-
-    while (current) {
-        if (current->stack == s) {
-            if (prev) {
-                prev->next = current->next;
-            } else {
-                head = current->next;
-            }
-
-            if (current == tail) {
-                tail = prev;
-            }
-
-            delete current->stack;
-            delete current;
-            return;
-        }
-
-        prev = current;
-        current = current->next;
+void YiginListesi::yiginlariKaldir() {
+    Dugum* suanki_dugum = bas;
+    while (suanki_dugum) {
+        Dugum* sonraki = suanki_dugum->sonraki;
+        delete suanki_dugum->yigin;
+        delete suanki_dugum;
+        suanki_dugum = sonraki;
     }
+    bas = nullptr;
+    son = nullptr;
 }
 
-void StackList::printAllStacks() const {
-    Node* current = head;
-    int stackNum = 1;
-
-    while (current) {
-        std::cout << "Stack " << stackNum << " items: ";
-        Stack* stack = current->stack;
-        while (!stack->empty()) {
-            std::cout << stack->top() << " ";
-            stack->pop();
-        }
-        std::cout << std::endl;
-
-        current = current->next;
-        stackNum++;
-    }
-}
-
-void StackList::removeStacks() {
-    Node* current = head;
-    while (current) {
-        Node* next = current->next;
-        delete current->stack;
-        delete current;
-        current = next;
-    }
-    head = nullptr;
-    tail = nullptr;
-}
-
-Stack* StackList::getStack(int index) const {
+Yigin* YiginListesi::getYigin(int index) const {
     if (index < 0) {
-        return nullptr; // Return nullptr if the index is invalid (less than 0)
+        return nullptr;
     }
 
-    Node* current = head;
+    Dugum* suanki_dugum = bas;
     int count = 0;
 
-    while (current) {
+    while (suanki_dugum) {
         if (count == index) {
-            return current->stack;
+            return suanki_dugum->yigin;
         }
 
-        current = current->next;
+        suanki_dugum = suanki_dugum->sonraki;
         count++;
     }
 
-    return nullptr; // Return nullptr if the index is greater than the number of stacks in the list
+    return nullptr;
 }

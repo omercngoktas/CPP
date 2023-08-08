@@ -12,7 +12,6 @@ int main(int argc, char* argv[]) {
     }
 
     dosya_oku(argv[1]);
-
-
+    
     return 0;
 }

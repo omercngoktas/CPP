@@ -4,15 +4,14 @@
 #include <fstream>
 #include <iostream>
 #include <sstream>
+#include <windows.h>
 #include "Yigin.h"
 #include "IkiliAramaAgaci.h"
 using namespace std;
 
 void dosya_oku(string dosya_adi);
-void addToStack(int current_number, Stack* &current_stack, StackList* &stack_list);
-void addToBinaryTree(IkiliAramaAgaciListesi* &binary_tree_list, StackList* &stack_list);
-IkiliAramaAgaci* findBinaryTree(IkiliAramaAgaciListesi* binary_tree_list);
-
-
+void yiginaYeniSayiEkle(int eklenecek_sayi, Yigin* &guncel_yigin, YiginListesi* &yigin_listesi);
+void ikiliAramaAgacinaEkle(IkiliAramaAgaciListesi* &ikili_arama_agaci_listesi, YiginListesi* &yigin_listesi);
+IkiliAramaAgaci* ikiliAramaAgaciBul(IkiliAramaAgaciListesi* ikili_arama_agaci_listesi);
 
 #endif

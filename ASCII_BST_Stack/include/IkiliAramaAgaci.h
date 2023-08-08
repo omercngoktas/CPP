@@ -7,46 +7,45 @@ using namespace std;
 
 class AgacDugumu {
     public:
-        int data;
+        int sayi;
         AgacDugumu* sol;
-        AgacDugumu* right;
-        AgacDugumu(int sayi) : data(sayi), sol(nullptr), right(nullptr) {};
+        AgacDugumu* sag;
+        AgacDugumu(int sayi) : sayi(sayi), sol(nullptr), sag(nullptr) {};
 };
 
 class IkiliAramaAgaci {
     private:
-        AgacDugumu* root;
-        AgacDugumu* insert(AgacDugumu* node, int sayi);
-        int getHeight(AgacDugumu* node);
-        int getSum(AgacDugumu* node);
-        void postorderTraversal(AgacDugumu* node);
+        AgacDugumu* kok_dugum;
+        AgacDugumu* ekle(AgacDugumu* dugum, int sayi);
+        int agacUzunlugu(AgacDugumu* dugum);
+        int degerlerToplami(AgacDugumu* dugum);
+        void postorderTraversal(AgacDugumu* dugum);
 
     public:
         IkiliAramaAgaci();
-        void insert(int sayi);
-        void display();
-        int getHeight();
-        int getSum();
+        void ekle(int sayi);
+        void goruntule();
+        int agacUzunlugu();
+        int degerlerToplami();
         void postorderTraversal();
 };
 
 class IkiliAramaAgaciListesi {
     private:
-        class Node {
+        class Dugum {
             public:
                 IkiliAramaAgaci* tree;
-                Node* next;
-                Node(IkiliAramaAgaci* t) : tree(t), next(nullptr) {}
+                Dugum* next;
+                Dugum(IkiliAramaAgaci* t) : tree(t), next(nullptr) {}
         };
-        Node* head;
-        Node* tail;
+        Dugum* bas;
+        Dugum* son;
 
     public:
         IkiliAramaAgaciListesi();
         ~IkiliAramaAgaciListesi();
-        void addTree(IkiliAramaAgaci* tree);
-        IkiliAramaAgaci* getTreeByIndex(int index) const;
-
+        void agacEkle(IkiliAramaAgaci* yeni_agac);
+        IkiliAramaAgaci* indexleAgacBul(int index) const;
 };
 
 #endif

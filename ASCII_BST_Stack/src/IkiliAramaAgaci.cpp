@@ -1,114 +1,106 @@
 #include "../include/IkiliAramaAgaci.h"
 
-IkiliAramaAgaci::IkiliAramaAgaci() : root(nullptr) {}
+IkiliAramaAgaci::IkiliAramaAgaci() : kok_dugum(nullptr) {}
 
-AgacDugumu* IkiliAramaAgaci::insert(AgacDugumu* node, int sayi) {
-    if (node == nullptr) {
+AgacDugumu* IkiliAramaAgaci::ekle(AgacDugumu* dugum, int sayi) {
+    if (dugum == nullptr) {
         return new AgacDugumu(sayi);
     }
 
-    if (sayi < node->data) {
-        node->sol = insert(node->sol, sayi);
-    } else if (sayi > node->data) {
-        node->right = insert(node->right, sayi);
+    if (sayi < dugum->sayi) {
+        dugum->sol = ekle(dugum->sol, sayi);
+    } else if (sayi > dugum->sayi) {
+        dugum->sag = ekle(dugum->sag, sayi);
     } else {
-        return node;
+        return dugum;
     }
 
-    return node;
+    return dugum;
 }
 
-void IkiliAramaAgaci::insert(int sayi) {
-    root = insert(root, sayi);
+void IkiliAramaAgaci::ekle(int sayi) {
+    kok_dugum = ekle(kok_dugum, sayi);
 }
 
-void IkiliAramaAgaci::display() {
-    postorderTraversal(root);
-    std::cout << std::endl;
+void IkiliAramaAgaci::goruntule() {
+    postorderTraversal(kok_dugum);
+    cout << endl;
 }
 
-int IkiliAramaAgaci::getHeight(AgacDugumu* node) {
-    if (node == nullptr) {
+int IkiliAramaAgaci::agacUzunlugu(AgacDugumu* dugum) {
+    if (dugum == nullptr) {
         return -1;
     }
 
-    int leftHeight = getHeight(node->sol);
-    int rightHeight = getHeight(node->right);
+    int sol_uzunluk = agacUzunlugu(dugum->sol);
+    int sag_uzunluk = agacUzunlugu(dugum->sag);
 
-    return 1 + std::max(leftHeight, rightHeight);
+    return 1 + max(sol_uzunluk, sag_uzunluk);
 }
 
 
-int IkiliAramaAgaci::getHeight() {
-    return getHeight(root);
+int IkiliAramaAgaci::agacUzunlugu() {
+    return agacUzunlugu(kok_dugum);
 }
 
-int IkiliAramaAgaci::getSum(AgacDugumu* node) {
-    if (node == nullptr) {
+int IkiliAramaAgaci::degerlerToplami(AgacDugumu* dugum) {
+    if (dugum == nullptr) {
         return 0;
     }
 
-    return node->data + getSum(node->sol) + getSum(node->right);
+    return dugum->sayi + degerlerToplami(dugum->sol) + degerlerToplami(dugum->sag);
 }
 
-int IkiliAramaAgaci::getSum() {
-    return getSum(root);
+int IkiliAramaAgaci::degerlerToplami() {
+    return degerlerToplami(kok_dugum);
 }
 
-void IkiliAramaAgaci::postorderTraversal(AgacDugumu* node) {
-    if (node != nullptr) {
-        postorderTraversal(node->sol);
-        postorderTraversal(node->right);
-        std::cout << char(node->data) << " ";
+void IkiliAramaAgaci::postorderTraversal(AgacDugumu* dugum) {
+    if (dugum != nullptr) {
+        postorderTraversal(dugum->sol);
+        postorderTraversal(dugum->sag);
+        cout << char(dugum->sayi) << " ";
     }
 }
 
 void IkiliAramaAgaci::postorderTraversal() {
-    postorderTraversal(root);
+    postorderTraversal(kok_dugum);
 }
 
-
-
-
-
-
-
-
-IkiliAramaAgaciListesi::IkiliAramaAgaciListesi() : head(nullptr), tail(nullptr) {}
+IkiliAramaAgaciListesi::IkiliAramaAgaciListesi() : bas(nullptr), son(nullptr) {}
 
 IkiliAramaAgaciListesi::~IkiliAramaAgaciListesi() {
-    Node* current = head;
-    while (current) {
-        Node* next = current->next;
-        delete current->tree;
-        delete current;
-        current = next;
+    Dugum* suanki_dugum = bas;
+    while (suanki_dugum) {
+        Dugum* next = suanki_dugum->next;
+        delete suanki_dugum->tree;
+        delete suanki_dugum;
+        suanki_dugum = next;
     }
 }
 
-void IkiliAramaAgaciListesi::addTree(IkiliAramaAgaci* tree) {
-    Node* newNode = new Node(tree);
+void IkiliAramaAgaciListesi::agacEkle(IkiliAramaAgaci* yeni_agac) {
+    Dugum* yeni_dugum = new Dugum(yeni_agac);
 
-    if (!head) {
-        head = newNode;
-        tail = newNode;
+    if (!bas) {
+        bas = yeni_dugum;
+        son = yeni_dugum;
     } else {
-        tail->next = newNode;
-        tail = newNode;
+        son->next = yeni_dugum;
+        son = yeni_dugum;
     }
 }
 
+IkiliAramaAgaci* IkiliAramaAgaciListesi::indexleAgacBul(int index) const {
+    Dugum* yeni_dugum = bas;
+    int sayac = 0;
 
-IkiliAramaAgaci* IkiliAramaAgaciListesi::getTreeByIndex(int index) const {
-    Node* current = head;
-    int count = 0;
-
-    while (current) {
-        if (count == index) {
-            return current->tree;
+    while (yeni_dugum) {
+        if (sayac == index) {
+            return yeni_dugum->tree;
         }
-        count++;
-        current = current->next;
+        sayac++;
+        yeni_dugum = yeni_dugum->next;
     }
 
     return nullptr;

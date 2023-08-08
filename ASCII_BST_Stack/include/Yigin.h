@@ -5,47 +5,39 @@
 
 using namespace std;
 
-class Stack {
+class Yigin {
     private:
-        int* elements;
-        int topIndex;
+        int* sayilar;
+        int son_index;
 
     public:
-        Stack();
-        ~Stack();
+        Yigin();
+        ~Yigin();
         void push(int item);
         void pop();
         int top() const;
         bool empty() const;
-        int size() const;
-        void display() const;
-
 };
 
-class StackList {
+class YiginListesi {
     private:
-        class Node {
+        class Dugum {
         public:
-            Stack* stack;
-            Node* next;
+            Yigin* yigin;
+            Dugum* sonraki;
 
-            Node(Stack* s) : stack(s), next(nullptr) {}
+            Dugum(Yigin* s) : yigin(s), sonraki(nullptr) {}
         };
 
-        Node* head;
-        Node* tail;
+        Dugum* bas;
+        Dugum* son;
 
     public:
-        StackList();
-        ~StackList();
-
-        void addStack(Stack* s);
-        void removeStack(Stack* s);
-        void printAllStacks() const;
-        void removeStacks();
-        Stack* getStack(int index) const;
-
+        YiginListesi();
+        ~YiginListesi();
+        void yiginEkle(Yigin* s);
+        void yiginlariKaldir();
+        Yigin* getYigin(int index) const;
 };
-
 
 #endif
