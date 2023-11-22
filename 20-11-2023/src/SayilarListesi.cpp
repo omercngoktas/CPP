@@ -26,7 +26,7 @@ void SayilarListesi::ekranaYaz() {
 
     while(temp) {
         ostringstream oss;
-        oss << hex << reinterpret_cast<uintptr_t>(temp);
+        oss << hex << setw(16) << setfill('0') << reinterpret_cast<uintptr_t>(temp);
         string addressStr = oss.str();
         sayi = temp->sayi->tamSayiDegeri();
         adresUzunlugu = addressStr.length();
@@ -45,7 +45,7 @@ void SayilarListesi::ekranaYaz() {
         cout << '#' << setw(adresUzunlugu) << addressStr << '#' << "  ";
         // basamaklarin adreslerini yazdirma
         temp->sayi->adresleriYaz();
-        // en ortadakiara cizgileri bastirma
+        // en ortadaki ara çizgileri bastirma
         cout << "#" << string(adresUzunlugu, '-') << "#" << "   ";
         for (int i = 0; i < sayiUzunlugu; ++i) {
             cout << string(7, '*');
@@ -54,6 +54,8 @@ void SayilarListesi::ekranaYaz() {
             }
         }
         cout << endl;
+        
+
         // ana sayiyi bastirma
         cout << "#" << string(adresUzunlugu - sayiUzunlugu, ' ') << sayi << '#' << "  ";
         temp->sayi->ekranaYaz();        
