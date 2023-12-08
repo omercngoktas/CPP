@@ -1,6 +1,6 @@
 CC = g++
 CFLAGS = -std=c++11 -Wall -Wextra
-TARGET = linked_list_operations
+TARGET = AvlAgaci_Yigin
 SOURCE_DIR = src
 INCLUDE_DIR = include
 LIB_DIR = lib

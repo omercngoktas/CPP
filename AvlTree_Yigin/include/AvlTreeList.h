@@ -15,6 +15,7 @@ class AvlTreeList {
                 AvlDugum* sonraki;
                 Yigin yigin;
                 int avlToplamDugumDegeri;
+                int agacNumarasi;
                 void postOrderYiginaEkle(Dugum* dugum);
         };
         
@@ -23,7 +24,7 @@ class AvlTreeList {
         AvlTreeList();
         AvlDugum* bas;
         AvlDugum* son;
-        void ekle(AvlTree* avlTree);
+        void ekle(AvlTree* avlTree, int agacNumarasi);
         void agaclariGoruntule();
         void postOrder();
         void yiginlariGoruntule();

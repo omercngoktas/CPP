@@ -1,14 +1,14 @@
 #include "../include/AvlTreeList.h"
 #include <iostream>
 
-AvlTreeList::AvlDugum::AvlDugum(AvlTree* avlTree) : avlTree(avlTree), onceki(nullptr), sonraki(nullptr), avlToplamDugumDegeri(0) {}
+AvlTreeList::AvlDugum::AvlDugum(AvlTree* avlTree) : avlTree(avlTree), onceki(nullptr), sonraki(nullptr), avlToplamDugumDegeri(0), agacNumarasi(0) {}
 
 AvlTreeList::AvlTreeList() : bas(nullptr) {}
 
 // avl agaclarini en sona ekler, while dongusu kullanmak yerine son isminde en sondaki
 // avl agacinin adresini gosteren bir pointer kullanilir, bu sayede gereksiz yere
 // while dongulerinde dolasip en sona eklemeye gerek kalmaz
-void AvlTreeList::ekle(AvlTree* avlTree) {
+void AvlTreeList::ekle(AvlTree* avlTree, int agacNumarasi) {
     AvlDugum* yeniDugum = new AvlDugum(avlTree);
     if (bas == nullptr) {
         // daha once hic agac eklenmemisse bas ve son pointerlari yeni dugumu gosterir
@@ -20,6 +20,7 @@ void AvlTreeList::ekle(AvlTree* avlTree) {
         son->sonraki = yeniDugum;
         son = son->sonraki;
     }
+    yeniDugum->agacNumarasi = agacNumarasi;
 }
 
 // avl agaclarindaki datalar ekrana bastirilir
@@ -61,17 +62,17 @@ void AvlTreeList::postOrder() {
         temp->postOrderYiginaEkle(temp->avlTree->kok);
         temp = temp->sonraki;
     }
-    cout << "Postorder olarak yiginlar olusturuldu\n";
 }
 
 // avl agaclarinin yapraklariyla olusturulan yiginlar ekranda gosterilir
 void AvlTreeList::yiginlariGoruntule() {
     AvlDugum* temp = bas;
     while(temp) {
-        cout << "AVLToplamDugumDegeri: " << static_cast<char>(temp->avlToplamDugumDegeri % (90-65+1)+65) << " -> " << (temp->avlToplamDugumDegeri % (90-65+1)+65) << " : " << temp->avlToplamDugumDegeri << " | ";
-        temp->yigin.yiginiGoruntule();
+        cout << static_cast<char>(temp->avlToplamDugumDegeri % (90-65+1)+65);
+        // temp->yigin.yiginiGoruntule();
         temp = temp->sonraki;
     }
+    cout << endl;
 }
 
 // gonderilen avl agaci, avl agaclarinin bulundugu avlTreeList'ten kaldirilir ve silinir
@@ -134,7 +135,7 @@ bool AvlTreeList::yigindanMinMaxCikar() {
         temp = temp->sonraki;
     }
 
-    cout << "Bulunan en kucuk deger: " << enKucukSayi << endl;
+    // cout << "Bulunan en kucuk deger: " << enKucukSayi << endl;
     // en kucuk sayi yigindan cikartilir
     enKucukYigin->yigin.cikar();
 
@@ -150,7 +151,7 @@ bool AvlTreeList::yigindanMinMaxCikar() {
         enBuyukYigin = enKucukYigin;
     }
 
-    cout << "Bulunan en buyuk deger: " << enBuyukYigin->yigin.getYiginBasi() << endl;
+    // cout << "Bulunan en buyuk deger: " << enBuyukYigin->yigin.getYiginBasi() << endl;
     // en buyuk sayi yigindan cikartilir
     enBuyukYigin->yigin.cikar();
 
